@@ -27,7 +27,7 @@
                      $timeout(function () {
                          $scope.lockSectionClass = 'SectionLockOff';
                          //alert("An user account must be selected");
-                         swal("Oops...", "An user account must be selected!", "error");
+                         swal("Oops...", "A user account must be selected from Active Directory List!", "error");
                      }, 1);
                      return;
                  }
@@ -39,7 +39,7 @@
                      DisplayName: $scope.selectedUser.originalObject.DisplayName,
                      Password: "",
                      IsAdmin: $scope.userIsAdmin,
-                     IsResource: $scope.userIsResource,
+                     IsResource: false,
                      IsProyectManager: false,
                      Enabled: true,
                      CreatedBy: "admin",
@@ -51,7 +51,6 @@
                  if ($scope.userId !== 0) {
                      data = $scope.userObj;
                      data.IsAdmin = $scope.userIsAdmin;
-                     data.IsResource = $scope.userIsResource;
                      data.EditedBy = "admin";
                      data.EditedDate = new Date();
                  }
@@ -90,7 +89,6 @@
          var CleanData = function () {
              $scope.userName = "";
              $scope.userIsAdmin = false;
-             $scope.userIsResource = false;
          };
 
          var LoadUser = function () {
@@ -112,11 +110,10 @@
                      if (response.Response[0]) {
                          $scope.userObj = response.Response[0];
                          $scope.userIsAdmin = response.Response[0].IsAdmin;
-                         $scope.userIsResource = response.Response[0].IsResource;
                          $scope.userId = response.Response[0].Id;
                      }
                  } else {
-                     $scope.error = "An Error has occured while loading Countries!";
+                     $scope.error = "An Error has occured while loading user!";
                  }
              });
          };

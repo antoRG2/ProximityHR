@@ -1,9 +1,19 @@
-﻿<div id="age"  class="notShow report-single-section">
+﻿<div id="age" class="notShow report-single-section">
     <div class="panel panel-primary" data-ng-controller="reportsCtrl">
         <div class="panel-heading">Age Report</div>
 
-        <kendo-grid options="agesrGrid">
+        <div id="agesGrid"></div>
 
-        </kendo-grid>
+        <script type="text/x-kendo-template" id="ageRangeFilter">
+            <div id="ageRangeDropDown">
+                <input type="search" id="ageRange" style="width: 120px" />
+            </div>
+        </script>
+
+        <script type="text/x-kendo-template" id="monthRangeFilter">
+            <div id="montRangehDropDown">
+                <input type="search" id="monthRange" style="width: 120px" />
+            </div>
+        </script>
     </div>
 </div>

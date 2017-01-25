@@ -23,8 +23,8 @@
 
 .k-gantt-toolbar .k-button, .k-gantt>.k-header .k-link, .k-gantt>.k-header li, .k-grid .k-header .k-button, .k-scheduler .k-header .k-button, .k-scheduler .k-header .k-link, .k-scheduler .k-header li, .km-pane-wrapper .k-header .k-button {
     color: #fff;
-    background-color: hotpink;
-    border-color: hotpink;
+    background-color: #7b63be;
+    border-color: #7b63be;
     -webkit-box-shadow: none;
     box-shadow: none;
 }

@@ -296,6 +296,7 @@
     <Content Include="Images\loading-image1.gif" />
     <Content Include="Images\logo-trans.png" />
     <Content Include="Images\logo-trans1.png" />
+    <Content Include="Images\logo.svg" />
     <Content Include="Images\pattern.png" />
     <Content Include="Images\plus-5-24.png" />
     <Content Include="Images\preloader.gif" />

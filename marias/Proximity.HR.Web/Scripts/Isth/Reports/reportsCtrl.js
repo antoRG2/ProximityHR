@@ -36,7 +36,7 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                         },
                         pageSize: 7,
                     },
-                   
+
                     filterable: {
                         mode: "row",
                         extra: false,
@@ -189,7 +189,7 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                         },
                         pageSize: 7,
                     },
-                
+
                     filterable: {
                         extra: false,
                         operators: {
@@ -289,7 +289,7 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                         title: "Country",
                         width: "120px",
                         filterable: {
-                            ui: function(element) {
+                            ui: function (element) {
                                 element.kendoDropDownList({
                                     dataSource: ["Costa Rica", "Peru"],
                                     optionLabel: "--Select Value--"
@@ -301,7 +301,7 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                         width: "120px"
                     }]
                 };// kendo grid
-                
+
             } else {
                 console.error("getDemographicsReport report didn't load");
             }
@@ -319,7 +319,7 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                 console.log("Generating getAgesReport now...");
                 $scope.agesr = response.Response;
                 console.log($scope.agesr);
-                $scope.agesrGrid = {
+                var agesGrid = $("#agesGrid").kendoGrid({
                     toolbar: ["excel"],
                     excel: {
                         fileName: "ages Report.xlsx",
@@ -338,24 +338,11 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                                 fields: {
                                     Person: { type: "string" },
                                     Age: { type: "number" },
-                                    BirthDate: {type: 'date'}
+                                    BirthDate: { type: 'date' }
                                 }
                             }
                         },
-                        pageSize: 7,
-                    },
-                    filterable: {
-                        //mode: "row",
-                        extra: false,
-                        operators: {
-                            number: {
-                                gte: "greater than or equal to",
-                                lte: "less than or equal to",
-                                lt: "less than",
-                                gt: "greater than",
-                                eq: "equal to"
-                            }
-                        }
+                        pageSize: 7
                     },
                     pageable: true,
                     dataBound: function () {
@@ -371,21 +358,101 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                         title: "BirthDate",
                         width: "120px",
                         format: "{0:MM/dd/yyyy}",
-                        filterable: false
+                        headerTemplate: kendo.template($("#monthRangeFilter").html())
                     }, {
                         field: "Age",
                         title: "Age",
                         width: "120px",
-                        filterable: {
-                            ui: function (element) {
-                                element.kendoDropDownList({
-                                    dataSource: [18, 25, 30, 35, 40, 45, 50, 55, 60 ],
-                                    optionLabel: "--Select Value--"
-                                });
-                            }
-                        }
+                        headerTemplate: kendo.template($("#ageRangeFilter").html()),
+                        sortable: false
                     }]
-                };// kendo grid
+                });// kendo grid
+
+                var monthDropDown = agesGrid.find("#monthRange").kendoDropDownList({
+                    autoBind: false,
+                    optionLabel: "Birth Date",
+                    dataSource: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    change: function () {
+                        var value = this.value();
+                        if (value) {
+                            agesGrid.data("kendoGrid").dataSource.filter({
+                                field: "BirthDate",
+                                operator: function (fieldDate) {
+                                    var month;
+                                    switch (value) {
+                                        case "January":
+                                            month = 0;
+                                            break;
+                                        case "February":
+                                            month = 1;
+                                            break;
+                                        case "March":
+                                            month = 2;
+                                            break;
+                                        case "April":
+                                            month = 3;
+                                            break;
+                                        case "May":
+                                            month = 4;
+                                            break;
+                                        case "June":
+                                            month = 4;
+                                            break;
+                                        case "July":
+                                            month = 6;
+                                            break;
+                                        case "August":
+                                            month = 7;
+                                            break;
+                                        case "September":
+                                            month = 8;
+                                            break;
+                                        case "October":
+                                            month = 9;
+                                            break;
+                                        case "November":
+                                            month = 10;
+                                            break;
+                                        case "December":
+                                            month = 11;
+                                            break;
+                                        default:
+                                    }
+
+                                    var parsedFieldDate = fieldDate.getMonth();
+                                    var result = (parsedFieldDate === month);
+
+                                    return result;
+                                }
+                            });
+                        } else {
+                            agesGrid.data("kendoGrid").dataSource.filter({});
+                        }
+                    }
+                });
+
+                var agedropDown = agesGrid.find("#ageRange").kendoDropDownList({
+                    autoBind: false,
+                    optionLabel: "Age",
+                    dataSource: ["18-25", "26-30", "31-40", "41-50", "51-65"],
+                    change: function () {
+                        var value = this.value();
+                        if (value) {
+                            var ageRange = value.split("-");
+
+                            agesGrid.data("kendoGrid").dataSource.filter({
+                                logic: "and",
+                                filters: [
+                                    { field: "Age", operator: "gt", value: parseInt(ageRange[0]) },
+                                    { field: "Age", operator: "lt", value: parseInt(ageRange[1]) }
+                                ]
+                            });
+                        } else {
+                            agesGrid.data("kendoGrid").dataSource.filter({});
+                        }
+                    }
+                });
+
             } else {
                 console.error("getAgesReport report didn't load");
             }
@@ -429,12 +496,12 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                         },
                         pageSize: 7,
                     },
-                    
+
                     filterable: {
                         mode: "row",
                         extra: false,
                         operators: {
-                            
+
                             date: {
                                 eq: "Is equal to",
                                 gte: "Is after or equal to",
@@ -505,17 +572,8 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
     };
     $scope.avg();
 
-  
+
 
 }]); // end of ctrl
 
 
-//}]).config(function($routeProvider, $locationProvider) {
-//    $routeProvider
-//     .when('/Reports#/average', {
-//         templateUrl: '/Reports/AverageReport'
-//     })
-//    .when('/Reports#/demo', {
-//        templateUrl: '/Reports/DemoReport'
-//    });
-//});

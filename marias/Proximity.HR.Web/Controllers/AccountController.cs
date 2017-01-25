@@ -60,20 +60,20 @@ namespace Proximity.HR.Web.Controllers
                     result.Response = _service.GetUserById(user.UserName)[0];
                     result.Status = ResponseCode.Success;
 
-                    FormsAuthentication.SetAuthCookie(user.UserName, true);
-                //}
-                //else
-                //{
-                //    result.Status = ResponseCode.Error;
-                //    result.Message = "Invalid Login";
-                //}
-            }
+                FormsAuthentication.SetAuthCookie(user.UserName, true);
+            //}
+            //    else
+            //    {
+            //    result.Status = ResponseCode.Error;
+            //    result.Message = "Invalid Login";
+            //}
+        }
             catch (Exception e)
             {
                 result.Status = ResponseCode.Error;
                 result.Message = "Error establishing connection with Active Directory" + result.Status + result.Response;
                 result.Exception = e;
-
+                
             }
             return result;
         }

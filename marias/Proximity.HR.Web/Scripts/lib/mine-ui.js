@@ -31,13 +31,13 @@ $('.left-link').on('click', function () {
     $('#ms').addClass('notShow');
     $('#' + theID).removeClass('notShow');
 
-    if (theID === 'intro') { $('#intro').addClass('animated slideInLeft'); }
+    if (theID === 'intro') { $('#intro').addClass('animated slideInDown'); }
     if (theID === 'average') { $('#average').addClass('animated slideInDown'); }
-    if (theID === 'demo') { $('#demo').addClass('animated slideInRight'); }
+    if (theID === 'demo') { $('#demo').addClass('animated slideInDown'); }
     if (theID === 'features') { $('#features').addClass('animated slideInDown');}
-    if (theID === 'license') { $('#license').addClass('animated slideInRight');}
+    if (theID === 'license') { $('#license').addClass('animated slideInDown'); }
     if (theID === 'age') { $('#age').addClass('animated slideInDown'); }
-    if (theID === 'ms') { $('#ms').addClass('animated slideInRight'); }
+    if (theID === 'ms') { $('#ms').addClass('animated slideInDown'); }
 
     if (theID == 'ms' || theID == 'average' || theID === 'demo' || theID === 'features' || theID === 'license' || theID === 'age') {
         $('#intro').addClass('notShow');

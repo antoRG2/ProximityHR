@@ -508,3 +508,10 @@ app.run(function ($rootScope) {
     }*/
 });
 
+
+
+app.run(function ($rootScope) {
+    /*$rootScope.hello = function () {
+        console.log('hello Carce');
+    }*/
+});

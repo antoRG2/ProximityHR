@@ -729,7 +729,7 @@ textarea.form-control {
 	position: relative;
 	width: 100%;
 	min-height: 100vh;
-    background: linear-gradient( rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(../images/hero.jpg);
+    background: linear-gradient( rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(../images/hero.jpg);
     /*background: -webkit-linear-gradient( rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/hero.jpg);*/ 
     /*background: linear-gradient(to left, #111, #222);*/
 	background-attachment: fixed;
@@ -743,7 +743,7 @@ textarea.form-control {
 }
 
 .logo img {
-    width: 450px;
+    width: 600px;
     height: 200px;
     margin-bottom: 20px;
 }
@@ -1007,7 +1007,8 @@ textarea.form-control {
 	text-align: center;
 	color: #FFF;
 	background-color: #3E2D6C;
-	padding: 20px;
+	/*padding: 20px;*/
+    padding: 2px;
 }
 
 .navbar-custom .navbar-brand,

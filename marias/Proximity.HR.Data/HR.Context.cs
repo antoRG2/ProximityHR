@@ -13,14 +13,13 @@
 namespace Proximity.HR.Data
 {
 
-using System;
-using System.Data.Entity;
-using System.Data.Entity.Infrastructure;
-using System.Data.Entity.Core.Objects;
-using System.Linq;
+    using System;
+    using System.Data.Entity;
+    using System.Data.Entity.Core.Objects;
+    using System.Data.Entity.Infrastructure;
 
 
-public partial class ProximityHREntities : DbContext
+    public partial class ProximityHREntities : DbContext
 {
     public ProximityHREntities()
         : base("name=ProximityHREntities")
