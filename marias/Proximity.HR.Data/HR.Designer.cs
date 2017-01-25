@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\Melis\Desktop\jan24-trello\jan24-trello\marias\Proximity.HR.Data\HR.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Isthmus\ProximityHR\marias\Proximity.HR.Data\HR.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

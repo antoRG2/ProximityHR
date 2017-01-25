@@ -11,7 +11,7 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                 console.log("features' report is loading!");
                 $scope.reportFeatExpertise = response.Response;
                 //console.log($scope.reportFeatExpertise);
-                $scope.featGrid = {
+                var featGrid = $("#featGrid").kendoGrid({
                     toolbar: ["excel"],
                     excel: {
                         fileName: "Features Report.xlsx",
@@ -38,13 +38,7 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                     },
 
                     filterable: {
-                        mode: "row",
-                        extra: false,
-                        operators: {
-                            string: {
-                                contains: "contains"
-                            }
-                        }
+                        mode: "row"
                     },
                     pageable: true,
                     dataBound: function () {
@@ -61,9 +55,22 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                     }, {
                         field: "LEVEL",
                         title: "Level",
-                        width: "120px"
+                        width: "120px",
+                        filterable: {
+                            cell: {
+                                template: function (args) {
+                                    args.element.kendoDropDownList({
+                                        dataSource: args.dataSource,
+                                        dataTextField: "LEVEL",
+                                        dataValueField: "LEVEL",
+                                        valuePrimitive: true
+                                    });
+                                }
+                            }
+                        }
                     }]
-                };// kendo grid
+                });// kendo grid            
+
             } else {
                 console.error('features by expertise report didnt load');
             }
@@ -141,7 +148,18 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                         width: "120px",
                         format: "{0:MM/dd/yyyy}",
                         filterable: {
-                            ui: "datepicker"
+                            filterable: {
+                                cell: {
+                                    template: function (args) {
+                                        args.element.kendoDropDownList({
+                                            dataSource: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                                            dataTextField: "started_on",
+                                            dataValueField: "started_on",
+                                            valuePrimitive: true
+                                        });
+                                    }
+                                }
+                            }
                         }
                     }, {
                         field: "working_years",
