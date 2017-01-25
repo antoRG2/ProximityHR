@@ -1,0 +1,30 @@
+﻿
+
+/*kendo mobile styles for excel epxort*/
+
+.k-header.k-grid-toolbar {
+    border-color: #fff;
+}
+
+.k-block, .k-button, .k-draghandle, .k-grid-header, .k-grouping-header, .k-header, .k-pager-wrap, .k-toolbar, .k-treemap-tile, html .km-pane-wrapper .k-header {
+     background-color: #fff; 
+
+}
+
+.k-autocomplete, .k-button, .k-draghandle, .k-dropdown-wrap, .k-grid-header, .k-grouping-header, .k-header, .k-numeric-wrap, .k-pager-wrap, .k-panelbar .k-tabstrip-items .k-item, .k-picker-wrap, .k-progressbar, .k-state-highlight, .k-tabstrip-items .k-item, .k-textbox, .k-toolbar, .km-pane-wrapper>.km-pane>.km-view>.km-content {
+    background-image: none;
+    background-position: 50% 50%;
+     background-color: #fff; 
+}
+
+.k-calendar .k-header .k-link {
+    color: #3f51b5;
+}
+
+.k-gantt-toolbar .k-button, .k-gantt>.k-header .k-link, .k-gantt>.k-header li, .k-grid .k-header .k-button, .k-scheduler .k-header .k-button, .k-scheduler .k-header .k-link, .k-scheduler .k-header li, .km-pane-wrapper .k-header .k-button {
+    color: #fff;
+    background-color: hotpink;
+    border-color: hotpink;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}

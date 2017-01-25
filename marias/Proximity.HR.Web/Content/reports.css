@@ -1,0 +1,239 @@
+﻿/*Melissa's styles*/
+
+/*top navigation*/
+.top-nav {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 3;
+    width: 100%;
+    height: 60px;
+    background-color: #254441;
+    color: hotpink;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+}
+
+.top-nav-list {
+    position: fixed;
+    right: 30px;
+    top: 20px;
+    z-index: 3;
+    display: inline-block;
+}
+
+.top-nav-item {
+    list-style: none;
+    display: inline-block;
+    margin-right: 30px;
+}
+
+.top-nav-link {
+     color: hotpink;
+     cursor: pointer;
+}
+
+
+/*=============================================*/
+.reports-section {
+    background-color: #eee;
+    width: 100%;
+    height: 100%;
+    min-width: 100vw;
+    min-height: 100vh;
+    /*color: #F0EFF4;*/
+    color: #333;
+}
+/*======================================================*/
+    .report-single-section {
+        height: 100%;
+        min-height: 100vh;
+        padding-top: 110px;
+        
+        position: absolute;
+        top: 0;
+    }
+
+    .notShow { display: none;}
+/*======================================================*/
+.left-panel {
+    position: fixed;
+    top: 90px;
+    padding: 20px 0;
+    background-color: #254441;
+    color: #F0EFF4;
+    width: 100%;
+    max-width: 200px;
+    min-height: 100vh;
+    border-top-right-radius: .50rem;
+    box-shadow: 0 0 20px rgba(0,0,0,0.4);
+    transition: all 300ms cubic-bezier(.74,.18,.52,.55);
+    transform: translateX(0);
+    z-index: 3;
+}
+
+.toggle-left-panel {
+    position: fixed;
+    top: 15%;
+    left: 10%;
+    z-index: 4;
+    transition: all 300ms cubic-bezier(.74,.18,.52,.55);
+}
+
+.toggle-left-panel:hover,
+.toggle-left-panel:active,
+.toggle-left-panel:visited,
+.toggle-left-panel:focus {
+    color: white;
+}
+
+.toggle-left-panel > i {
+    font-size: 20px;
+    color: hotpink;
+}
+
+.left-nav {
+    padding: 0;
+}
+.left-item {
+    list-style: none;
+    margin: 0 0 30px 0;
+    padding-left: 30px;
+    height: 50px;
+    word-spacing: 5px;
+}
+
+.left-item:hover,
+.left-item--active {
+    background-color: rgba(0, 0, 0, .6);
+    cursor: pointer;
+}
+
+.left-item:hover > a,
+.left-item--active > a {
+    color: #F0EFF4;
+}
+
+.left-item:hover > a > i,
+.left-item--active > a > i{
+    color: hotpink;
+}
+
+.left-link {
+    color: #838E83;
+    cursor: pointer;
+    line-height: 50px;
+    display: block;
+}
+
+.left-link:hover ,
+.left-link:visited ,
+.left-link:focus ,
+.left-link:active {
+    color: #F0EFF4;
+}
+
+/*titles command subtitles*/
+.reports-section--title {
+    color: #F0EFF4;
+    /*color: #4C5B61;*/
+    text-align: left;
+    padding: 20px 0 0 20px;
+    text-transform: uppercase;
+    font-size: 16px;
+}
+
+.left-nav--subtitle {
+    display: inline-block;
+    padding: 30px 0 30px 30px;
+    font-weight: 600;
+    color: hotpink;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+}
+
+/*Javascript classes*/
+.open-left-panel.left-panel {
+    transform: translateX(-200px);
+}
+
+.opened-link {
+    left: 2%;
+}
+
+/*inputs and filters*/
+
+.reports-section >  input[type=text],
+.reports-section >  select,
+.reports-section >  textarea,
+.reports-section >  input[type=checkbox],
+.reports-section >  input[type=radio],
+.reports-section > input[type=date] {
+    border: none;
+    width: 100%;
+    max-height: 100px;
+    border-radius: .25rem;
+    padding: 0;
+    padding: .5rem;
+    color: darkgray;
+    font-weight: bold;
+}
+
+.custom-form-control {
+    border: none;
+    width: 100%;
+    max-height: 100px;
+    border-radius: .25rem;
+    padding: 0;
+    padding: .5rem;
+    color: darkgray;
+    font-weight: bold;
+}
+
+.fa-file-excel-o {
+    color: aquamarine;
+}
+
+/*=======================================================NG FORM ====================================================================*/
+.activate-link {
+    padding: .5rem 1rem;
+    border-radius: 15%;
+    background-color: #5C6784;
+    font-size: .8rem;
+    cursor: pointer;
+}
+
+.activate-link:hover {
+    background-color: #333;
+}
+
+.activate-link > i {
+    color: white;
+}
+
+/*.toHide {
+    display: none;
+    transform: translateX(-1500px);
+}
+ .notHide.toHide {
+     display: inherit;
+     transform: translateX(0);
+ }*/
+
+.navl > li:hover {
+    background-color: white;
+    color: #5C6784;
+}
+.navl:last-child > li {
+    padding-top: 20px;
+}
+
+.navl .form-control {
+    border-radius: 15px;
+    padding-left: 30px;
+    transition: all 200ms ease-in-out;
+}
+
+.navl .form-control:focus {
+    border-color: #6CD4FF;
+    border-width: 2px;
+}

@@ -1,0 +1,89 @@
+﻿<!--Users Section-->
+<section id="users" class="pfblock pfblock-gray" style="" ng-hide="showHideAdminContent">
+    <div id="usersContainer" class="container" data-ng-controller="AccountController" style="position: relative">
+        <div class="{{lockSectionClass}}"></div>
+        <input type="hidden" class="form-control" name="txtUserId" ng-model="userId" value="0" />
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="pfblock-header wow fadeInUp">
+                    <h2 class="pfblock-title">Users</h2>
+                    <div class="pfblock-line"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <b><i class="fa fa-search" aria-hidden="true"></i> Select User:  </b>
+            </div>
+            <div class="col-sm-4">
+                <div class="padded-row">
+                    <angucomplete id="adUsers"
+                                  placeholder="Select User"
+                                  pause="100"
+                                  selectedobject="selectedUser"
+                                  callback-fn="UserSelected()"
+                                  localdata="UsersFromAD"
+                                  searchfields="DisplayName"
+                                  titlefield="DisplayName"
+                                  minlength="1"
+                                  inputclass="form-control form-control-small"
+                                  matchclass="highlight" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                <div class="" ng-show="selectedUser">
+                    You selected <span class="bold-span">{{selectedUser.originalObject.DisplayName}}</span> which account name is: <span class="bold-span">{{selectedUser.originalObject.AccountName}}</span>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <form novalidate name="userForm" ng-submit="saveUser()">
+                <fieldset>
+                    <div class="panel-group" id="userAccordion">
+                        <div class="panel panel-default panel-transparent">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#userAccordion" href="">User Info</a>
+                                </h4>
+                            </div>
+                            <div id="userCollapseOne" class="panel-collapse collapse in" style="background-color: bisque;">
+                                <div class="panel-body">
+                                    <div class="col-sm-6">
+                                        <label for="number"><i class="fa fa-user" aria-hidden="true"></i> User Name:</label>
+                                        <span style="color: red" class="error" ng-show="(userForm.file.$dirty || IsFormSubmitted) && userForm.txtUserName.$error.required">User Name required!</span>
+                                        <input type="text" class="form-control" name="txtUserName" data-ng-model="userName" placeholder=" User Name..." required />
+                                        <br />
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label><i class="fa fa-lock" aria-hidden="true"></i> Is Admin: </label>
+                                        <p class="form-control" style="border: none; background-color: transparent;">
+                                            <label for="adminYes">Yes</label>
+                                            <input id="adminYes" type="radio" ng-model="userIsAdmin" ng-value="true">
+
+                                            <label for="adminNo">No</label>
+                                            <input id="adminNo" type="radio" ng-model="userIsAdmin" ng-value="false">
+                                        </p>
+                                    </div>
+                                    <div class="col-sm-3">
+                                        <label><i class="fa fa-user-md" aria-hidden="true"></i> Is Resource: </label>
+                                        <p class="form-control" style="border: none; background-color: transparent;">
+                                            <label for="resourceYes">Yes</label>
+                                            <input id="resourceYes" type="radio" ng-model="userIsResource" ng-value="true">
+
+                                            <label for="resourceNo">No</label>
+                                            <input id="resourceNo" type="radio" ng-model="userIsResource" ng-value="false">
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="text-align: center;">
+                        @*<input type="submit" value="Save" class="btn btn-lg btn-primary" />*@
+                        <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</section>

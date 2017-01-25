@@ -1,0 +1,17 @@
+﻿<div id="intro" class="report-single-section" data-ng-controller="reportsCtrl">
+    <h1 class="text-center">Dashboard</h1>
+    <div kendo-chart
+         k-legend="{ position: 'bottom' }"
+         k-series-defaults="{ type: 'donut' }"
+         k-series="[
+            { field: 'Marital_Status', name: 'Marital_Status' }
+        ]"
+        categoryAxis: {
+            field: "Marital_Status",
+            categories: [Soltero (a), Casado (a), Divorciado (a), Viudo (a), Union Libre, not specified]
+        }
+         k-data-source="msGrid"
+         style="height: 400px;">
+    </div>
+  
+</div>

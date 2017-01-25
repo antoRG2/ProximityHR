@@ -1,0 +1,34 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="HR Dashboard">
+    <meta name="author" content="Marias">
+
+    <title>Proximty HR</title>
+
+    @Styles.Render("~/Content/css")
+    @Styles.Render("~/Content/themes/base/css")
+    @Scripts.Render("~/bundles/modernizr")
+   <script src="~/Scripts/lib/sweetalert.min.js"></script>
+  
+    
+
+
+    
+</head>
+<body ng-app="isthMeApp">
+    @RenderBody()
+
+    @Scripts.Render("~/bundles/jquery")
+    @Scripts.Render("~/bundles/jqueryui")
+    @Scripts.Render("~/bundles/angular")   
+    @Scripts.Render("~/scripts/isthMeApp")
+    @Scripts.Render("~/bundles/Custom")
+    @Scripts.Render("~/bundles/kendoui")
+    @RenderSection("scripts", required: false)
+ 
+</body>
+</html>
+

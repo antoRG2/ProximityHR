@@ -1,0 +1,130 @@
+﻿<!--Skills Section-->
+<section id="skillSet" class="pfblock pfblock-gray" style="" ng-hide="showHideContent">
+    <div id="skillSetContainer" class="container" data-ng-controller="skillsSetController" style="position: relative;">
+        <div class="{{lockSectionClass}}"></div>
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="pfblock-header wow fadeInUp">
+                    <h2 class="pfblock-title">My Skills</h2>
+                    <div class="pfblock-line"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <form novalidate name="EmployeeTechFeatureLstForm" ng-submit="saveEmployeeTechFeatureLst()">
+                <fieldset>
+                    <div class="panel-group" id="TechnologiesSetAccordion">
+                        <div class="panel panel-default panel-transparent">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#TechnologiesSetAccordion" href="">My SkillSet</a>
+                                </h4>
+                            </div>
+                            <div id="TechnologiesSetCollapse" class="panel-collapse collapse in" style="background-color: bisque;">
+                                <div class="panel-body">
+                                    <div class="panel-group" id="technology-{{$index}}">
+                                        <div ng-repeat="tecn in filteredTechnologies" class="panel panel-default panel-transparent">
+                                            <div class="panel-heading" style="background-color: lightskyblue;">
+                                                <h4 class="panel-title">
+                                                    <a data-toggle="collapse" data-parent="#technology-{{$index}}" href="#techCollapse-{{$index}}">{{tecn.Name}}</a>
+                                                </h4>
+                                            </div>
+                                            <div id="techCollapse-{{$index}}" class="panel-collapse collapse" style="background-color: white;">
+                                                <div class="panel-body">
+                                                    <span>{{tecn.Detail}}</span>
+                                                    <ul id="techFeatures" class="navl">
+                                                        <li ng-repeat="item in tecn.Features" id="tech.Id-item{{$index}}">
+                                                            <div class="row" style="padding: 5px;">
+                                                                <div class="col-sm-2">
+                                                                    <h3><span>{{item.Name}}</span></h3>
+                                                                    <input type="hidden" class="form-control" name="TechnologyFeature" ng-model="TechnologyFeature[$index]" value="{{item.Id}}"/>
+                                                                </div>
+                                                                <div class="row col-sm-4 feedback-rating-row" ng-init="rate=item.Level">
+
+                                                                    <rating ng-model="rate"
+                                                                            max="5"
+                                                                            on-hover="hovering_over(value)"
+                                                                            on-leave="overStar = null"
+                                                                            titles="['poor','basic','good','excellent','expert']"
+                                                                            style="cursor: pointer;" ng-click="addTechFeat(item.Id,rate,isDesirable,isTeachable)"/>
+
+                                                                </div>
+                                                                <div class="col-sm-4" ng-init="isDesirable=item.Desirable">
+                                                                    <label>
+                                                                        I want training!
+                                                                        <switch name="Desirable" on="Yes" off="No" ng-model="isDesirable" ng-change="addTechFeat(item.Id,rate,isDesirable,isTeachable)" ng-disabled="isTeachable"/>
+                                                                    </label>
+                                                                </div>
+                                                                <div class="col-sm-2" ng-init="isTeachable=item.Teachable">
+                                                                    <label>
+                                                                        I can teach!
+                                                                        <switch class="green" name="Teachable" on="Yes" off="No" ng-model="isTeachable" ng-change="addTechFeat(item.Id,rate,isDesirable,isTeachable)" ng-disabled="isDesirable"/>
+                                                                    </label>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                        <li class="ngFormFeat--item"> 
+                                                            <div class="row">
+                                                                <div class="container-fluid">
+                                                                    <div class="col-sm-12">
+                                                                        <div class="toHide">
+                                                                            <ng-form ng-class="ngFormFeat" name="featForm" novalidate>
+                                                                                @*<span>{{tecn.Id}}</span>*@
+                                                                                <div class="col-sm-3">
+                                                                                    <div class="form-group">
+                                                                                        <input type="text"
+                                                                                               class="form-control"
+                                                                                               id="featureName"
+                                                                                               name="featureName"
+                                                                                               placeholder="Feature Name..."
+                                                                                              
+                                                                                               ng-model="Featuress.Name">
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-7">
+                                                                                    <div class="form-group">
+                                                                                        <input type="text"
+                                                                                               class="form-control"
+                                                                                               id="featureDetail"
+                                                                                               name="featureDetail"
+                                                                                               placeholder="Feature Description..."
+                                                                                               ng-model="Featuress.Detail">
+                                                                                    </div>
+                                                                                </div>
+                                                                                <div class="col-sm-2">
+                                                                                    <div class="form-group">
+                                                                                        <button type="button" class="btn btn-sm btn-primary" ng-click="saveFeature(tecn.Id)">
+                                                                                            <i class="fa fa-plus" aria-hidden="true"></i> Save
+                                                                                        </button>
+                                                                                    </div>
+                                                                                </div>
+                                                                            </ng-form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </li>
+                                                    </ul>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <pagination ng-model="currentPage"
+                                                    total-items="Technologies.length"
+                                                    max-size="maxSize"
+                                                    boundary-links="true">
+                                        </pagination>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="text-align: center;">
+                        @*<input type="submit" value="Save" class="btn btn-lg btn-primary" />*@
+                        <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        @{ @Html.Partial("_modal"); }
+    </div>
+</section>

@@ -1,0 +1,249 @@
+﻿<!--Profile Section-->
+<section id="profile" class="pfblock pfblock-gray" ng-hide="showHideContent">
+    <div id="profileContainer" class="container" data-ng-controller="employeeController">
+        <div class="{{lockSectionClass}}"></div>
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="pfblock-header wow fadeInUp">
+                    <h2 class="pfblock-title">Employee Profile</h2>
+                    <div class="pfblock-line"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <b><i class="fa fa-search" aria-hidden="true"></i> Select employee:  </b>
+            </div>
+            <div class="col-sm-4">
+                <div class="padded-row">
+                    <angucomplete id="ex1"
+                                  placeholder="Select employee"
+                                  pause="100"
+                                  selectedobject="selectedCountry"
+                                  callback-fn="myFunc()"
+                                  localdata="Employees"
+                                  searchfields="FullName"
+                                  titlefield="FullName"
+                                  minlength="1"
+                                  inputclass="form-control form-control-small"
+                                  matchclass="highlight" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+            </div>
+        </div>
+        <div class="row">
+            <form novalidate name="f1" ng-submit="saveDetails()" accordeon-show >
+                <fieldset>
+                    <div class="panel-group" id="accordion">
+                        <div class="panel panel-default panel-transparent">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">Employee General Info</a>
+                                </h4>
+                            </div>
+                            <div id="collapseOne" class="panel-collapse collapse in" style="background-color: bisque;">
+                                <div class="panel-body">
+                                    <input type="hidden" class="form-control" name="txtEmpId" ng-model="employeeId" value="0" />
+
+                                    <div class="col-sm-6">
+                                        <label for="number"><i class="fa fa-hashtag" aria-hidden="true"></i> Employee Number:</label>
+                                        <span style="color: red" class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.txtEmpNumber.$error.required">Employee Number required!</span>
+                                        <input type="text" class="form-control" name="txtEmpNumber" ng-model="employeeNumber" placeholder=" Employee Number..." required />
+                                        <br />
+
+                                        <label for="name"><i class="fa fa-pencil" aria-hidden="true"></i> Name:</label>
+                                        <span style="color: red" class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.txtEmpName.$error.required">Name required!</span>
+                                        <input type="text" class="form-control" name="txtEmpName" ng-model="employeeName" placeholder=" Employee Name..." required />
+                                        <br />
+
+                                        <label for="firstLastName"><i class="fa fa-pencil" aria-hidden="true"></i> First Last Name:</label>
+                                        <span style="color: red" class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.txtEmpFirstLastName.$error.required">First Last Name required!</span>
+                                        <input type="text" class="form-control" name="txtEmpFirstLastName" ng-model="employeeFirstLastName" placeholder=" Employee First Last Name..." required />
+                                        <br />
+
+                                        <label for="secondLastName"><i class="fa fa-pencil" aria-hidden="true"></i> Second Last Name:</label>
+                                        <span style="color: red" class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.txtEmpSecondLastName.$error.required">Second Last Name required!</span>
+                                        <input type="text" class="form-control" name="txtEmpSecondLastName" ng-model="employeeSecondLastName" placeholder=" Employee Second Last Name..." required />
+                                        <br />
+
+                                        <label for="gender"><i class="fa fa-neuter" aria-hidden="true"></i> Gender: </label>
+                                        <select class="form-control" style="color: black" data-ng-model="employeeGender" data-ng-options="opt.Value as opt.Display for opt in genders">
+                                            <option disabled value="">-- Select Gender --</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="maritalStatus"><i class="fa fa-pencil" aria-hidden="true"></i> Marital Status:</label>
+                                        <select class="form-control" style="color: black" data-ng-model="employeeMaritalStatus" data-ng-options="opt.Value as opt.Display for opt in maritalStatuses">
+                                            <option disabled value="">-- Select Marital Status --</option>
+                                        </select>
+
+                                        <label for="birthDate"><i class="fa fa-birthday-cake" aria-hidden="true"></i> Birthdate:</label>
+                                        <input type="date" class="form-control datetimepicker" name="txtEmpBirthDate" ng-model="employeeBirthDate" placeholder=" Birthdate..." required />
+                                        <br />
+
+                                        <label for="nationality"><i class="fa fa-flag" aria-hidden="true"></i> Nationality:</label>
+                                        <span style="color: red" class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.txtEmpNationality.$error.required">Nationality required!</span>
+                                        <input type="text" class="form-control" name="txtEmpNationality" ng-model="employeeNationality" placeholder=" Nationality..." required />
+                                        <br />
+
+                                        <label for="schooling"><i class="fa fa-graduation-cap" aria-hidden="true"></i> Schooling:</label>
+                                        <select class="form-control" style="color: black" data-ng-model="employeeSchooling" data-ng-options="opt.Value as opt.Display for opt in schoolings">
+                                            <option disabled value="">-- Select Schooling --</option>
+                                        </select>
+
+                                        <label for="startDate"><i class="fa fa-calendar" aria-hidden="true"></i> Start Date:</label>
+                                        <input type="date" class="form-control datetimepicker" name="txtEmpStartDate" ng-model="employeeStartDate" placeholder=" Start date in Proximity..." required />
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default panel-transparent">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Employee Phone/Address Info</a>
+                                </h4>
+                            </div>
+                            <div id="collapseTwo" class="panel-collapse collapse" style="background-color: bisque;">
+                                <div class="panel-body">
+                                    <div class="col-sm-6">
+                                        <label for="primaryPhone"><i class="fa fa-phone" aria-hidden="true"></i> Primary Phone Number: </label>
+                                        <span style="color: red" class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.txtEmpPrimaryPhone.$error.required">Primary Phone required!</span>
+                                        <input type="text" class="form-control" name="txtEmpPrimaryPhone" data-ng-model="employeePrimaryPhoneNumber" placeholder=" Primary Phone Number..." required />
+                                        <br />
+
+                                        <label for="secondaryPhone"><i class="fa fa-phone" aria-hidden="true"></i> Secondary Phone Number:</label>
+                                        <span style="color: red" class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.txtEmpSecondaryPhone.$error.required">Secondary Phone required!</span>
+                                        <input type="text" class="form-control" name="txtEmpSecondaryPhone" data-ng-model="employeeSecundaryPhoneNumber" placeholder=" Secondary Phone Number..." required />
+                                        <br />
+
+                                        <label for="emergencyContactName"><i class="fa fa-phone" aria-hidden="true"></i> Emergency Contact Name:</label>
+                                        <span style="color: red" class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.txtEmpEmergencyContactName.$error.required">Emergency Contact Name required!</span>
+                                        <input type="text" class="form-control" name="txtEmpEmergencyContactName" data-ng-model="employeeEmergencyPhoneNumber" placeholder=" Emergency Contact Name..." required />
+                                        <br />
+
+                                        <label for="emergencyContactPhone"><i class="fa fa-phone" aria-hidden="true"></i> Emergency Contact Phone:</label>
+                                        <span style="color: red" class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.txtEmpEmergencyContactPhone.$error.required">Emergency Contact Phone required!</span>
+                                        <input type="text" class="form-control" name="txtEmpEmergencyContactPhone" data-ng-model="employeeEmergencyContact" placeholder=" Emergency Contact Phone..." required />
+                                        <br />
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="country"><i class="fa fa-flag" aria-hidden="true"></i>  Country: </label>
+                                        <select class="form-control" style="color: black" data-ng-model="employeeCountry" data-ng-options="opt.Value as opt.Display for opt in countries" data-ng-change="getStatesModel()">
+                                            <option disabled value="">-- Select Country --</option>
+                                        </select>
+
+                                        <label for="state"><i class="fa fa-map-marker" aria-hidden="true"></i> State: </label>
+                                        <select class="form-control" style="color: black" data-ng-model="employeeState" data-ng-disabled="!states" data-ng-options="opt.Value as opt.Display for opt in states" data-ng-change="getCitiesModel()">
+                                            <option value="">-- Select State --</option>
+                                        </select>
+
+                                        <label for="city"><i class="fa fa-map-marker" aria-hidden="true"></i> City: </label>
+                                        <select class="form-control" style="color: black" data-ng-model="employeeCity" data-ng-disabled="!cities" data-ng-options="opt.Value as opt.Display for opt in cities" data-ng-change="getDistrictsModel()">
+                                            <option value="">-- Select City --</option>
+                                        </select>
+
+                                        <label for="district"><i class="fa fa-map-marker" aria-hidden="true"></i> District: </label>
+                                        <select class="form-control" style="color: black" data-ng-model="employeeDistrict" data-ng-disabled="!districts" data-ng-options="opt.Value as opt.Display for opt in districts">
+                                            <option value="">-- Select District --</option>
+                                        </select>
+
+                                        <label for="address"><i class="fa fa-map-marker" aria-hidden="true"></i> Address:</label>
+                                        <span style="color: red" class="error" ng-show="(f1.file.$dirty || IsFormSubmitted) && f1.txtEmpAddress.$error.required">Address required!</span>
+                                        <input type="text" class="form-control" name="txtEmpAddress" ng-model="employeeAddress" placeholder=" Address..." required />
+                                        <br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default panel-transparent">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">Employee Passport/Visa info</a>
+                                </h4>
+                            </div>
+                            <div id="collapseThree" class="panel-collapse collapse" style="background-color: bisque;">
+                                <div class="panel-body">
+                                    <div class="col-sm-4">
+                                        <label for="hasPassport"><i class="fa fa-pencil" aria-hidden="true"></i> Passport: </label>
+                                        <p class="form-control">
+                                            <label for="passportYes">Yes</label>
+                                            <input id="passportYes" type="radio" ng-model="employeeHasPassport" ng-value="true" ng-change="newPassportVisaSelected('employeeHasPassport')">
+
+                                            <label for="passportNo">No</label>
+                                            <input id="passportNo" type="radio" ng-model="employeeHasPassport" ng-value="false" ng-change="newPassportVisaSelected('employeeHasPassport')">
+                                        </p>
+
+                                        <label for="passportNumber"><i class="fa fa-pencil" aria-hidden="true"></i> Passport Number:</label>
+                                        <input type="text" class="form-control" data-ng-disabled="!employeeHasPassport" name="txtEmpPassportNumber" ng-model="employeePassportNumber" placeholder=" Passport Number..." />
+                                        <br />
+
+                                        <label for="passportExpeditionDate"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Passport Expedition:</label>
+                                        <input type="date" id="employeePassportExpeditionDate" class="form-control" name="txtEmpPassportExpeditionDate" ng-model="employeePassportExpeditionDate" required />
+                                        <br />
+
+                                        <label for="country"><i class="fa fa-calendar-check-o" aria-hidden="true"></i> Passport Expiration:</label>
+                                        <input type="date" id="employeePassportExpirationDate" class="form-control" name="txtEmpPassportExpirationDate" ng-model="employeePassportExpirationDate" required />
+                                        <br />
+
+                                        <label for="passportIssueCity"><i class="fa fa-pencil" aria-hidden="true"></i> Passport Issue City:</label>
+                                        <select class="form-control" style="color: black" data-ng-model="employeePassportIssueCity" data-ng-disabled="!employeeHasPassport" data-ng-options="opt.Value as opt.Display for opt in allCities">
+                                            <option value="">-- Select Issue City --</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="hasVisa"><i class="fa fa-cc-visa" aria-hidden="true"></i> Visa: </label>
+                                        <p class="form-control">
+                                            <label for="visaYes">Yes</label>
+                                            <input id="visaYes" type="radio" ng-model="employeeHasVisa" ng-value="true" ng-change="newPassportVisaSelected('employeeHasVisa')">
+
+                                            <label for="visaNo">No</label>
+                                            <input id="visaNo" type="radio" ng-model="employeeHasVisa" ng-value="false" ng-change="newPassportVisaSelected('employeeHasVisa')">
+                                        </p>
+
+                                        <label for="visaNumber"><i class="fa fa-cc-visa" aria-hidden="true"></i> Visa Number:</label>
+                                        <input type="text" class="form-control" data-ng-disabled="!employeeHasVisa" name="txtEmpVisaNumber" ng-model="employeeVisaNumber" placeholder=" Visa Number..." /><br />
+
+                                        <label for="VisaExpeditionDate"><i class="fa fa-cc-visa" aria-hidden="true"></i> Visa Expedition Date:</label>
+                                        <input type="date" id="txtEmpVisaExpeditionDate" class="form-control" name="txtEmpVisaExpeditionDate" ng-model="employeeVisaExpeditionDate" required /><br />
+
+                                        <label for="country"><i class="fa fa-cc-visa" aria-hidden="true"></i> Visa Expiration Date:</label>
+                                        <input type="date" id="txtEmpVisaExpirationDate" class="form-control" name="txtEmpVisaExpirationDate" ng-model="employeeVisaExpirationDate" required /><br />
+
+                                        <label for="visaIssueCity"><i class="fa fa-cc-visa" aria-hidden="true"></i> Visa Issue City:</label>
+                                        <select class="form-control" style="color: black" data-ng-model="employeeVisaIssueCity" data-ng-disabled="!employeeHasVisa" data-ng-options="opt.Value as opt.Display for opt in allCities">
+                                            <option value="">-- Select Issue City --</option>
+                                        </select>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <label for="hasLicense"><i class="fa fa-cc-license" aria-hidden="true"></i> License: </label>
+                                        <p class="form-control">
+                                            <label for="licenseYes">Yes</label>
+                                            <input id="licenseYes" type="radio" ng-model="employeeHasLicense" ng-value="true" ng-change="newPassportVisaSelected('employeeHasLicense')">
+
+                                            <label for="licenseNo">No</label>
+                                            <input id="licenseNo" type="radio" ng-model="employeeHasLicense" ng-value="false" ng-change="newPassportVisaSelected('employeeHasLicense')">
+                                        </p>
+
+                                        <label for="licenseNumber"><i class="fa fa-cc-license" aria-hidden="true"></i> License Number:</label>
+                                        <input type="text" class="form-control" data-ng-disabled="!employeeHasLicense" name="txtEmpLicenseNumber" ng-model="employeeLicenseNumber" placeholder=" License Number..." /><br />
+
+                                        <label for="LicenseExpeditionDate"><i class="fa fa-cc-license" aria-hidden="true"></i> License Expedition Date:</label>
+                                        <input type="date" id="txtEmpLicenseExpeditionDate" class="form-control" name="txtEmpLicenseExpeditionDate" ng-model="employeeLicenseExpeditionDate" required /><br />
+
+                                        <label for="country"><i class="fa fa-cc-license" aria-hidden="true"></i> License Expiration Date:</label>
+                                        <input type="date" id="txtEmpLicenseExpirationDate" class="form-control" name="txtEmpLicenseExpirationDate" ng-model="employeeLicenseExpirationDate" required /><br />
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="text-align: center;">
+                        <button type="submit" class="btn btn-lg btn-primary"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</section>

@@ -1,0 +1,36 @@
+﻿<script type="text/ng-template" id="myModalContent.html">
+    <div class="modal-header">
+        <h3 class="modal-title" style="color: white;">{{formTitle}}</h3>
+    </div>
+    <div class="modal-body">
+        <form class="form-horizontal" role="form">
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="featureName">Feature Name:</label>
+                <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="featureName"
+                           name="featureName"
+                           placeholder="Feature Name"
+                           ng-model="Features.Name">
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-2" for="featureDetail">Description:</label>
+                <div class="col-sm-10">
+                    <input type="text"
+                           class="form-control"
+                           id="featureDetail"
+                           name="featureDetail"
+                           placeholder="Feature Description"
+                           ng-model="Features.Detail">
+                </div>
+            </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        @*<button class="btn btn-primary btn-sm" type="button" ng-click="SaveFeature()" ng-hide=""><i class="glyphicon glyphicon-save-file"></i> Save</button>*@
+        <button class="btn btn-primary btn-sm" type="button" ng-click="ok()">Apply</button>
+        <button class="btn btn-warning btn-sm" type="button" ng-click="cancel()">Cancel</button>
+    </div>
+</script>

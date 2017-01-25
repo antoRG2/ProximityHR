@@ -1,0 +1,611 @@
+﻿<!--<script src="~/Scripts/lib/jquery-1.7.1.js"></script>
+<script src="~/Scripts/Isth/Skills/skillsForm.js"></script>-->
+<!--Spinner-->
+<div id="LockPane" class="{{lockClass}}">
+</div>
+
+<!--Preloader tetrix style-->
+<div id="preloader">
+    <div id="status"></div>
+</div>
+
+<!--Home section-->
+<section id="home" class="pfblock-image screen-height">
+    <div class="home-overlay"></div>
+    <div class="intro">
+        <div class="start"></div>
+        <div>
+            <img src="~/Images/logo-trans1.png" />
+        </div>
+        <div class="loginContainer">
+            <login-form id="testLogin"></login-form>
+        </div>
+    </div>
+    <a id="testpull" href="#profile" ng-hide="showHideContent">
+        <div class="scroll-down">
+            <span>
+                <i class="fa fa-angle-down fa-2x"></i>
+            </span>
+        </div>
+    </a>
+</section>
+
+<!--Navigation Bar-->
+<header class="header" ng-hide="showHideContent">
+    <nav class="navbar navbar-custom" role="navigation">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#custom-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="index.html">
+                    <p style="font-size: medium">Isthmus<img src="~/Images/IsthMe.png" /></p>
+                </a>
+            </div>
+            <div class="collapse navbar-collapse" id="custom-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#profile">My profile</a></li>
+                    <li><a href="#skills">My Skills</a></li>
+                    <li><a href="#portfolio">My Works</a></li>
+                    <li><a href="#asenet">Asenet</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                    <li><a href="" style="font-weight: bold" ng-click="logOut()">SignOut</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+</header>
+
+<!--My Profile Section-->
+<section id="profile" class="pfblock pfblock-gray screen-height"
+    ng-controller='EditController'
+    ng-hide="showHideContent">
+    <div class="home-overlay"></div>
+    <div id="profileContainer" class="container transparentbg">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="pfblock-header wow fadeInUp">
+                    <h2 class="pfblock-title">My Profile</h2>
+                    <div class="pfblock-line"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <form role="form" style="max-width: 500px;">
+                <strong class="error">{{ error }}</strong>
+                <div class="form-group">
+                    <label for="firstname">
+                        First Name</label>
+                    <input type="text" class="form-control" id="firstname" data-ng-model="firstname" />
+                </div>
+
+                <button type="submit" class="btn btn-default" data-ng-click="save()">
+                    Submit</button>
+            </form>
+            <form>
+                <fieldset>
+                    <div class="col-sm-6">
+                        <div id="profilePicture">
+                            <img src="~/Images/Profile.png" />
+                            <input type="file" value="browse" />
+                        </div>
+                        <label for="name">Name:</label>
+                        <input id="name" type="text" class="form-control" placeholder="name" />
+                        <label for="id">Id:</label>
+                        <input id="id" type="text" class="form-control" placeholder="ID" />
+                        <label for="birth">Birth date:</label>
+                        <input id="birth" type="datetime" class="form-control" placeholder="Birth Date" />
+                        <label for="age">Age:</label>
+                        <input id="age" type="text" class="form-control" placeholder="Age" />
+                        <label for="gender">Gender:</label>
+                        <select id="gender" class="form-control" placeholder="Gender">
+                            <option>Male</option>
+                            <option>Female</option>
+                        </select>
+                        <label for="civil">Marital Status:</label>
+                        <select id="civil" class="form-control">
+                            <option>Singled</option>
+                            <option>Married</option>
+                            <option>Other</option>
+                        </select>
+                        <br />
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="children">Children:</label>
+                        <input id="children" type="text" class="form-control" />
+                        <label for="profession">Profession:</label>
+                        <input id="profession" type="text" class="form-control" />
+                        <label for="address">Address:</label>
+                        <textarea id="address" class="form-control"></textarea>
+                        <label for="tel">Phone:</label>
+                        <input id="tel" type="tel" class="form-control" />
+                        <label for="mail">Mail:</label>
+                        <input id="mail" type="email" class="form-control" />
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+    </div>
+</section>
+
+<!--My Skills Section-->
+<section class="pfblock skillsection" id="skills" style="height: 100%;" ng-hide="showHideContent">
+    <div class="container transparentbg">
+        <div class="row skills">
+            <div class="row">
+                <div class="col-sm-6 col-sm-offset-3">
+                    <div class="pfblock-header wow fadeInUp">
+                        <h2 class="pfblock-title">My Skills</h2>
+                        <div class="pfblock-line"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="container">
+                <div ng-controller='ModalDemoCtrl'>
+                    <div class="tabbable tabs-left">
+                        <ul class="list-group" style="float: left; width: 25%">
+                            <li class="list-group-item" ng-repeat="item in skillsList">
+                                <a href="#skill-{{$index}}" data-toggle="tab" ng-click="setActiveSkill($index)">
+                                    <h3>{{item.Name}}</h3>
+
+                                </a>
+                            </li>
+                        </ul>
+                        <div class="tab-content" style="float: left; width: 75%">
+
+                            <div id="skill-{{$index}}" class="tab-pane skillItem" ng-repeat="item in skillsList">
+
+                                <p>
+                                    <h2 style="color: white;">{{item.Name}}</h2>
+                                </p>
+                                <p style="color: #ff6a00">{{item.Description}}</p>
+                                <ul id="technologies" class="navl">
+                                    <li ng-repeat="tecn in item.Technologies" id="item{{$index}}">
+
+                                        <div class="row" style="padding: 5px;">
+                                            <div class="col-sm-2">
+                                                <h3>{{tecn.Name}}</h3>
+                                            </div>
+                                            <div class="col-sm-4">
+                                                <rating ng-model="tecn.Level"
+                                                    max="10"
+                                                    readonly="true"
+                                                    on-hover=""
+                                                    on-leave=""
+                                                    style="cursor: pointer; color: #ffd800; font-size: large;">
+                                                        </rating>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                Desirable
+                                                              <label style="width: 50px; text-align: center; background-color: {{yesNoColor(tecn.Desirable)}}; border-radius: 25px; border-style: solid; border-width: thin;">
+                                                                  {{yesNoFlag(tecn.Desirable)}}
+                                                              </label>
+                                            </div>
+                                            <div class="col-sm-2">
+                                                Teachable
+                                                        <label style="width: 50px; text-align: center; background-color: {{yesNoColor(tecn.Teachable)}}; border-radius: 25px; border-style: solid; border-width: thin;">
+                                                            {{yesNoFlag(tecn.Teachable)}}
+                                                        </label>
+                                            </div>
+                                        </div>
+                                    </li>
+                                </ul>
+                            </div>
+
+
+
+
+
+
+                        </div>
+                    </div>
+
+
+
+
+
+                    <script type="text/ng-template" id="myModalContent.html">
+                        <div class="modal-header">
+                            <h3 class="modal-title">{{formTitle}}</h3>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal" role="form">                                                                           
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="skillName">Skill Name:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="skillName" name="skillName" placeholder="Skill Name" ng-model="skills.Name" ng-disabled="testDis">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="skillDesc">Description:</label>
+                                    <div class="col-sm-10">
+                                        <input type="text" class="form-control" id="skillDesc" name="skillDesc" placeholder="Skill Description" ng-model="skills.Description" ng-disabled="testDis">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-2" for="technologies">Technologies:</label>
+                                    <div class="col-sm-8">
+                                        <input type="text" class="form-control" ng-model="newItemName" placeholder="Name of Technology" ng-disabled="testDis">
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <span ng-click="addItem()" class="skillOption" ng-disabled="testDis">
+                                            <img src="..//Images/add_black.png" />
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-2"></div>
+                                    <div class="col-sm-10">
+                                        <ul id="technologies" class="navl">
+                                            <li ng-repeat="item in skills.Technologies" id="item{{$index}}">
+                                                <a ng-click="deleteItem($index)" class="delete-item" ng-disabled="allowDelete">x</a>
+                                                <div class="row" style="padding: 5px;">
+                                                    <div class="col-sm-2">
+                                                        <h3><a href="#">{{item.Name}}</a></h3>
+                                                    </div>                                                                        
+                                                    <div class="col-sm-4">                                   
+                                                        <rating ng-model="item.Level"
+                                                            max="10" 
+                                                            readonly="isReadonly" 
+                                                            on-hover="" 
+                                                            on-leave="" 
+                                                            titles="['one','two','three']" style="cursor: pointer; color: #ff6a00;" >
+                                                        </rating>
+                                                        <input type="range" ng-model="item.Level"  min="0" max="10" step="1">                        
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <label>
+                                                            <switch name="Desirable" ng-model="item.Desirable" on="Yes" off="No"></switch>
+                                                            Desirable
+                                                        </label>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <label>
+                                                            <switch name="Teachable" ng-model="item.Teachable" on="Yes" off="No"></switch>
+                                                            Teachable
+                                                        </label>                       
+                                                    </div>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </div>
+                                </div>              
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <button class="btn btn-primary" type="button" ng-click="ok()">Apply</button>
+                            <button class="btn btn-warning" type="button" ng-click="cancel()">Cancel</button>
+                        </div>              
+                    </script>
+                    <span id="addNewSkill" class="skillOption" ng-click="open('lg',false)">
+                        <img src="~/Images/plus-5-24.png" />
+                        Add new skill
+                    </span>
+                    <span id="updateSkill" class="skillOption" ng-click="open('lg',true)">
+                        <img src="~/Images/edit-8-24.png" />
+                        Update my skills
+                    </span>
+                    <br />
+                </div>
+
+                <!--
+                <div id="myCarousel" class="carousel slide" data-ride="carousel" data-interval="false">
+                    <ul class="list-group col-sm-4">
+                        <li data-target="#myCarousel" data-slide-to="{{$index}}" class="list-group-item" ng-repeat="Skill in SkillList">
+                            <h3>{{Skill.Name}}</h3>
+                        </li>
+                    </ul>
+                    <div class="carousel-inner">
+                        <div id="skill-{{$index}}" class="item skillItem" ng-repeat="Skill in SkillList">
+                            <h2 style="color: white;">{{Skill.Name}}</h2>
+                            <ul id="technologiesC" class="navl">
+                                <li ng-repeat="tec in Skill.Technologies">
+                                    <div class="skillLeftItem">
+                                        <h3>{{tec.Name}}</h3>
+                                    </div>
+                                    <div class="checkbox skillRightItem">
+                                        <p>Desirable</p>
+                                        <input type="checkbox" data-size="small" ng-model="checked" ng-init="checked=tec.Desirable" data-off-text="No" data-on-text="Yes">
+                                    </div>
+                                    <div class="checkbox skillRightItem">
+                                        <p>Teachable</p>
+
+                                        <input type="checkbox" data-size="small" ng-model="checkedd" ng-init="checkedd=tec.Teachable" data-off-text="No" data-on-text="Yes">
+                                    </div>
+                                    <div
+                                        class="rateit bigstars skillRightItem"
+                                        data-rateit-min="0"
+                                        data-rateit-max="5"
+                                        data-rateit-readonly="false"
+                                        data-rateit-starwidth="32"
+                                        data-rateit-starheight="32"
+                                        data-rateit-ispreset="true"
+                                        data-rateit-resetable="false"
+                                        data-rateit-value="{{tec.Level}}"
+                                        ng-model="tec.Level">
+                                    </div>
+                                </li>
+                            </ul>
+                            <div class="carousel-caption">
+                                <div class="carousel-controls">
+                                    <a class="left carousel-control" href="#myCarousel" data-slide="prev">
+                                        <span class="glyphicon glyphicon-chevron-left"></span>
+                                    </a>
+                                    <a class="right carousel-control" href="#myCarousel" data-slide="next">
+                                        <span class="glyphicon glyphicon-chevron-right"></span>
+                                    </a>
+                                </div>
+                                <h4>{{Skill.Name}}</h4>
+                                <p>{{Skill.Description}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                -->
+
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+<!--My Works Section-->
+<section id="portfolio" class="pfblock" ng-hide="showHideContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="pfblock-header wow fadeInUp">
+                    <h2 class="pfblock-title">My works</h2>
+                    <div class="pfblock-line"></div>
+                    <div class="pfblock-subtitle">
+                        No one lights a lamp in order to hide it behind the door: the purpose of light is to create more light, to open people’s eyes, to reveal the marvels around.					
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="grid wow zoomIn">
+                    <figure class="effect-bubba">
+                        <img src="Images/item-1.jpg" alt="img01" />
+                        <figcaption>
+                            <h2>Crazy <span>Shark</span></h2>
+                            <p>Lily likes to play with crayons and pencils</p>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="grid wow zoomIn">
+                    <figure class="effect-bubba">
+                        <img src="Images/item-2.jpg" alt="img01" />
+                        <figcaption>
+                            <h2>Funny <span>Tortoise</span></h2>
+                            <p>Lily likes to play with crayons and pencils</p>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="grid wow zoomIn">
+                    <figure class="effect-bubba">
+                        <img src="Images/item-3.jpg" alt="img01" />
+                        <figcaption>
+                            <h2>The <span>Hat</span></h2>
+                            <p>Lily likes to play with crayons and pencils</p>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="grid wow zoomIn">
+                    <figure class="effect-bubba">
+                        <img src="Images/item-4.jpg" alt="img01" />
+                        <figcaption>
+                            <h2>Bang <span>Bang</span></h2>
+                            <p>Lily likes to play with crayons and pencils</p>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="grid wow zoomIn">
+                    <figure class="effect-bubba">
+                        <img src="Images/item-5.jpg" alt="img01" />
+                        <figcaption>
+                            <h2>Crypton <span>Dude</span></h2>
+                            <p>Lily likes to play with crayons and pencils</p>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+            <div class="col-xs-12 col-sm-4 col-md-4">
+                <div class="grid wow zoomIn">
+                    <figure class="effect-bubba">
+                        <img src="Images/item-6.jpg" alt="img01" />
+                        <figcaption>
+                            <h2>Don't <span>Poke</span></h2>
+                            <p>Lily likes to play with crayons and pencils</p>
+                        </figcaption>
+                    </figure>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Asenet Section-->
+<section id="asenet" class="pfblock pfblock-gray" style="height: 100% !important;" ng-hide="showHideContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="pfblock-header wow fadeInUp">
+                    <h2 class="pfblock-title">What my clients say</h2>
+                    <div class="pfblock-line"></div>
+                    <div class="pfblock-subtitle">
+                        No one lights a lamp in order to hide it behind the door: the purpose of light is to create more light, to open people’s eyes, to reveal the marvels around.
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div id="cbp-qtrotator" class="cbp-qtrotator">
+                <div class="cbp-qtcontent">
+                    <img src="Images/client-1.jpg" alt="client-1" />
+                    <blockquote>
+                        <p>Work with John was a pleasure. He understood exactly what I wanted and created an awesome site for my company.</p>
+                        <footer>Pino Caruso</footer>
+                    </blockquote>
+                </div>
+                <div class="cbp-qtcontent">
+                    <img src="Images/client-2.jpg" alt="client-2" />
+                    <blockquote>
+                        <p>I'm really happy with the results. Get 100% satisfaction is difficult but Alex got it without problems.</p>
+                        <footer>Jane Doe</footer>
+                    </blockquote>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Contact Section-->
+<section id="contact" class="pfblock" ng-hide="showHideContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="pfblock-header">
+                    <h2 class="pfblock-title">Drop me a line</h2>
+                    <div class="pfblock-line"></div>
+                    <div class="pfblock-subtitle">
+                        No one lights a lamp in order to hide it behind the door: the purpose of light is to create more light, to open people’s eyes, to reveal the marvels around.					
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <form id="contact-form" role="form">
+                    <div class="ajax-hidden">
+                        <div class="form-group wow fadeInUp">
+                            <label class="sr-only" for="c_name">Name</label>
+                            <input type="text" id="c_name" class="form-control" name="c_name" placeholder="Name">
+                        </div>
+                        <div class="form-group wow fadeInUp" data-wow-delay=".1s">
+                            <label class="sr-only" for="c_email">Email</label>
+                            <input type="email" id="c_email" class="form-control" name="c_email" placeholder="E-mail">
+                        </div>
+                        <div class="form-group wow fadeInUp" data-wow-delay=".2s">
+                            <textarea class="form-control" id="c_message" name="c_message" rows="7" placeholder="Message"></textarea>
+                        </div>
+                        <button type="submit" class="btn btn-lg btn-block wow fadeInUp" data-wow-delay=".3s">Send Message</button>
+                    </div>
+                    <div class="ajax-response"></div>
+                </form>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!--Footer Secyion-->
+<footer id="footer" ng-hide="showHideContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <img src="~/Images/logo-trans.png" width="150px" heigth="75px" />
+                <p class="">eXceptional Experience</p>
+                <p class="copyright">
+                    © 2015 Isthmus de Costa Rica S.A. | join us: <a href="https://isthmusit.com/">join us</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!--Scroll to top-->
+<div class="scroll-up">
+    <a href="#home" id="logOutLink"><i class="fa fa-angle-up"></i></a>
+</div>
+
+
+
+
+<!--
+<div id="dialog-form" title="Create New Skill">
+    <p class="validateTips">All form fields are required.</p>
+    <form class="form-horizontal" role="form" ng-controller="skillsCtrl">
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="skillName">Skill Name:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="skillName" name="skillName" placeholder="Skill Name">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="skillDesc">Description:</label>
+            <div class="col-sm-10">
+                <input type="text" class="form-control" id="skillDesc" name="skillDesc" placeholder="Skill Description">
+            </div>
+        </div>
+        <div class="form-group">
+            <label class="control-label col-sm-2" for="technologies">Technologies:</label>
+
+            <div class="col-sm-8">
+                <input type="text" class="form-control" ng-model="newItemName" placeholder="Name of Technology">
+            </div>
+            <div class="col-sm-2">
+                <span ng-click="addItem()" class="skillOption">
+                    <img src="~/Images/add_black.png" />
+                </span>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-sm-2"></div>
+            <div class="col-sm-10">
+                <ul id="technologies" class="navl">
+                    <li ng-repeat="item in items.data" id="item{{item.id}}">
+                        <a ng-click="deleteItem($index)" class="delete-item">x</a>
+                        <div style="float: left; margin: 2px;">
+                            <h3><a href="#">{{item.title}}</a></h3>
+                        </div>
+                        <div class="checkbox" style="float: right; margin: 2px;">
+                            <label>
+                                <input type="checkbox" data-size="mini" data-off-text="No" data-on-text="Yes">
+                                Desirable</label>
+                        </div>
+                        <div class="checkbox" style="float: right; margin: 2px;">
+                            <label>
+                                <input type="checkbox" data-size="mini" data-off-text="No" data-on-text="Yes">
+                                Teachable</label>
+                        </div>
+                        <div style="float: right; margin: 2px;"
+                            class="rateit bigstars"
+                            data-rateit-min="0"
+                            data-rateit-max="5"
+                            data-rateit-readonly="false"
+                            data-rateit-starwidth="32"
+                            data-rateit-starheight="32"
+                            data-rateit-ispreset="true"
+                            data-rateit-resetable="false"
+                            data-rateit-value="0">
+                        </div>
+
+                    </li>
+                </ul>
+            </div>
+        </div>
+        <div>
+            <input type="submit" tabindex="-1" style="position: absolute; top: -1000px" value="asdsa">
+        </div>
+    </form>
+</div>
+
+
+-->

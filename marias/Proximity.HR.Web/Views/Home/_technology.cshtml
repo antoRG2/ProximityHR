@@ -1,0 +1,100 @@
+﻿<!--technology Section-->
+<section id="technology" class="pfblock pfblock-gray" style="" ng-hide="showHideAdminContent">
+    <div id="technologyContainer" class="container" data-ng-controller="skillsController" style="position: relative;">
+        <div class="{{lockSectionClass}}"></div>
+        
+        <div class="row">
+            <div class="col-sm-6 col-sm-offset-3">
+                <div class="pfblock-header wow fadeInUp">
+                    <h2 class="pfblock-title">Technologies & Features</h2>
+                    <div class="pfblock-line"></div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-2">
+                <b><i class="fa fa-search" aria-hidden="true"></i> Select Technology:</b>
+            </div>
+            <div class="col-sm-4">
+                <div class="padded-row">
+                    <angucomplete id="technologies"
+                                  placeholder="Select Technology"
+                                  pause="100"
+                                  selectedobject="selectedTechnology"
+                                  callback-fn="TechSelected()"
+                                  localdata="Technologiess"
+                                  searchfields="Name"
+                                  titlefield="Name"
+                                  minlength="1"
+                                  inputclass="form-control form-control-small"
+                                  matchclass="highlight" />
+                </div>
+            </div>
+            <div class="col-sm-6">
+                @*<div class="" ng-show="selectedTechnology">
+                    You selected <span class="bold-span">{{selectedTechnology.originalObject.Name}}</span>
+                </div>*@
+                @*<input type="button" value="Add New" class="btn btn-lg btn-primary" ng-click="AddNew()" />*@
+                <button type="submit" class="btn btn-lg btn-primary" ng-click="AddNew()">
+                    <i class="fa fa-plus" aria-hidden="true"></i> Add New
+                </button>
+            </div>
+        </div>
+        <div class="row">
+            <form novalidate name="technologyForm" ng-submit="saveTechnology()">
+                <fieldset>
+                    <div class="panel-group" id="saveTechnoAccordion">
+                        <div class="panel panel-default panel-transparent">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" data-parent="#saveTechnoAccordion" href="">Technology & Features</a>
+                                </h4>
+                            </div>
+                            <div id="techCollapseOne" class="panel-collapse collapse in" style="background-color: bisque;">
+                                <div class="panel-body">
+                                    <div class="col-sm-6">
+
+                                        <label for="number"><i class="fa fa-desktop" aria-hidden="true"></i> Technology Name:</label>
+                                        <span style="color: red" class="error" ng-show="(technologyForm.file.$dirty || IsFormSubmitted) && technologyForm.txtTechnologyName.$error.required">technology Name required!</span>
+                                        <input type="text" class="form-control" name="txtTechnologyName" id="txtTechnologyName" data-ng-model="Technology.Name" ng-disabled="allowEdition" placeholder=" technology Name..." required />
+                                        <br />
+
+
+                                        <label for="number"><i class="fa fa-file-text-o" aria-hidden="true"></i> Technology Description:</label>
+                                        <span style="color: red" class="error" ng-show="(technologyForm.file.$dirty || IsFormSubmitted) && technologyForm.txtTechnologyDescription.$error.required">technology Description required!</span>
+                                        <input type="text" class="form-control" name="txtTechnologyDescription" data-ng-model="Technology.Detail" ng-disabled="allowEdition" placeholder=" technology Description..." required />
+                                        <br />
+
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="number"><i class="fa fa-tags" aria-hidden="true"></i> Features:</label>
+                                        <select style="width: 100%;" size="7" ng-model="currentItems" 
+                                                ng-multiple="false"
+                                                ng-options="opt.Name for opt in Technology.Features" selected-model="testModel" ng-click="setActiveSkill(opt)"></select>
+
+                                        <span id="addNewFeature" class="skillOption" ng-click="open('lg',false)" ng-hide="allowEdition">
+                                            <img src="~/Images/plus-5-24.png" />
+                                            Add new feature
+                                        </span>
+                                        <span id="updateFeature" class="skillOption" ng-click="open('lg',true)" ng-hide="allowEdition">
+                                            <img src="~/Images/edit-8-24.png" />
+                                            Edit a feature
+                                        </span>
+                                        @*<span id="deleteFeature" class="skillOption" ng-click="deleteFeature()" ng-hide="allowEdition">
+                                            <img src="~/Images/remove-8-24.png" />
+                                            Delete a feature
+                                        </span>*@
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" style="text-align: center;">
+                        <button type="submit" class="btn btn-lg btn-primary" ng-disabled="allowEdition"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+        @{ @Html.Partial("_modal"); }
+    </div>
+</section>

@@ -1,0 +1,43 @@
+﻿<!--Main spinner-->
+<div id="LockPane" class="{{lockClass}}"></div>
+
+<!--Preloader tetrix style-->
+<div id="preloader">
+    <div id="status"></div>
+</div>
+
+@{ @Html.Partial("_login"); }
+
+@{ @Html.Partial("_menu"); }
+
+@{ @Html.Partial("_user"); }
+
+@{ @Html.Partial("_technology"); }
+
+@{ @Html.Partial("_profile"); }
+
+@{ @Html.Partial("_skills"); }
+
+
+
+<footer id="footer" ng-hide="showHideContent">
+    <div class="container">
+        <div class="row">
+            <div class="col-sm-12">
+                <img src="~/Images/Proximititranspa.png" width="150px" heigth="75px" />
+                <p>
+                    <img src="~/Images/slogan-transpa.png" width="150px" heigth="75px" />
+                </p>
+
+                <p class="copyright">
+                    © 2016 Proximity de Costa Rica S.A. | <a href="http://www.proximitycr.com/">Join us</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!--Scroll to top-->
+<div class="scroll-up">
+    <a href="#home" id="logOutLink"><i class="fa fa-angle-up"></i></a>
+</div>
