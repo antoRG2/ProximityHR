@@ -1,10 +1,7 @@
-﻿using Proximity.HR.Data;
-using Proximity.HR.Models.Dto;
-using Proximity.HR.Models.ReportsDto;
+﻿using System;
+using System.Web.Http;
 using Proximity.HR.Models.ErrorHandler;
 using Proximity.HR.Services.Service;
-using System;
-using System.Web.Http;
 
 namespace Proximity.HR.Web.Controllers
 {

@@ -1,8 +1,78 @@
-﻿app.controller('reportsCtrl', ['$scope', '$rootScope', 'reportsService', '$timeout', '$window', '$http', '$route', '$routeParams', '$location',
+﻿//Reference: http://docs.telerik.com/kendo-ui/api/javascript/ui/grid#configuration-columns.filterable
+
+app.controller('reportsCtrl', ['$scope', '$rootScope', 'reportsService', '$timeout', '$window', '$http', '$route', '$routeParams', '$location',
 function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, $routeParams, $location) {
     $scope.$route = $route;
     $scope.$location = $location;
     $scope.$routeParams = $routeParams;
+
+    var monthDataSource = new kendo.data.DataSource({
+        data: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+    });
+
+    var monthChangeFilter = function(value, filterField, grid) {
+        if (value) {
+            grid.data("kendoGrid").dataSource.filter({
+                field: filterField,
+                operator: function (fieldDate) {
+                    var month;
+                    switch (value) {
+                        case "January":
+                            month = 0;
+                            break;
+                        case "February":
+                            month = 1;
+                            break;
+                        case "March":
+                            month = 2;
+                            break;
+                        case "April":
+                            month = 3;
+                            break;
+                        case "May":
+                            month = 4;
+                            break;
+                        case "June":
+                            month = 4;
+                            break;
+                        case "July":
+                            month = 6;
+                            break;
+                        case "August":
+                            month = 7;
+                            break;
+                        case "September":
+                            month = 8;
+                            break;
+                        case "October":
+                            month = 9;
+                            break;
+                        case "November":
+                            month = 10;
+                            break;
+                        case "December":
+                            month = 11;
+                            break;
+                        default:
+                    }
+
+                    var result;
+
+                    if (typeof fieldDate.getMonth === 'function') {
+                        var parsedFieldDate = fieldDate.getMonth();
+                        result = (parsedFieldDate === month);
+                    } else {
+                        result = false;
+                    }
+
+                    return result;
+                }
+            });
+        } else {
+            grid.data("kendoGrid").dataSource.filter({});
+        }
+    }
+
     /*======================================== report features by expertise ========================================*/
     $scope.reportFeatByExpertise = function () {
         var promise = reportsService.GetFeaturesByExpertise();
@@ -83,6 +153,14 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
 
     /*======================================== report average working years ========================================*/
 
+    var months = new kendo.data.DataSource({
+        data: [
+            { name: "January", value: 1},
+            { name: "February", price: 2 },
+            { name: "March", price: 3 }
+        ]
+    });
+
     $scope.averageWYReport = function () {
         var promise = reportsService.GetAverageWYReport();
         promise.success(function (response) {
@@ -90,7 +168,7 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                 console.log("Generating average working years report now...");
                 $scope.aWYR = response.Response;
                 //console.log($scope.aWYR);
-                $scope.avwyGrid = {
+                var avwyGrid = $("#avwyGrid").kendoGrid({
                     toolbar: ["excel"],
                     excel: {
                         fileName: "average working years Report.xlsx",
@@ -124,14 +202,7 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                             },
                             number: {
                                 eq: "Is equal to"
-                            },
-                            date: {
-                                eq: "Is equal to",
-                                gte: "Is after or equal to",
-                                gt: "Is after",
-                                lte: "Is before or equal to",
-                                lt: "Is before"
-                            }
+                            }                            
                         }
                     },
                     pageable: true,
@@ -148,25 +219,28 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                         width: "120px",
                         format: "{0:MM/dd/yyyy}",
                         filterable: {
-                            filterable: {
-                                cell: {
-                                    template: function (args) {
-                                        args.element.kendoDropDownList({
-                                            dataSource: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
-                                            dataTextField: "started_on",
-                                            dataValueField: "started_on",
-                                            valuePrimitive: true
-                                        });
-                                    }
-                                }
+                            cell: {
+                                enabled: false
                             }
-                        }
+                        },
+                        headerTemplate: kendo.template($("#monthRangeFilter").html())
+                       
                     }, {
                         field: "working_years",
                         title: "Working years",
                         width: "120px"
                     }]
-                };// kendo grid
+                });// kendo grid
+                var averageReport = avwyGrid.find("#monthRange").kendoDropDownList({
+                    autoBind: false,
+                    optionLabel: "Birth Date",
+                    dataSource: monthDataSource,
+                    change: function () {
+                        var value = this.value();
+                        monthChangeFilter(value, "started_on", avwyGrid);
+                    }
+                });
+               
             } else {
                 console.error("awyr report didn't load");
             }
@@ -389,63 +463,10 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                 var monthDropDown = agesGrid.find("#monthRange").kendoDropDownList({
                     autoBind: false,
                     optionLabel: "Birth Date",
-                    dataSource: ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"],
+                    dataSource: monthDataSource,
                     change: function () {
                         var value = this.value();
-                        if (value) {
-                            agesGrid.data("kendoGrid").dataSource.filter({
-                                field: "BirthDate",
-                                operator: function (fieldDate) {
-                                    var month;
-                                    switch (value) {
-                                        case "January":
-                                            month = 0;
-                                            break;
-                                        case "February":
-                                            month = 1;
-                                            break;
-                                        case "March":
-                                            month = 2;
-                                            break;
-                                        case "April":
-                                            month = 3;
-                                            break;
-                                        case "May":
-                                            month = 4;
-                                            break;
-                                        case "June":
-                                            month = 4;
-                                            break;
-                                        case "July":
-                                            month = 6;
-                                            break;
-                                        case "August":
-                                            month = 7;
-                                            break;
-                                        case "September":
-                                            month = 8;
-                                            break;
-                                        case "October":
-                                            month = 9;
-                                            break;
-                                        case "November":
-                                            month = 10;
-                                            break;
-                                        case "December":
-                                            month = 11;
-                                            break;
-                                        default:
-                                    }
-
-                                    var parsedFieldDate = fieldDate.getMonth();
-                                    var result = (parsedFieldDate === month);
-
-                                    return result;
-                                }
-                            });
-                        } else {
-                            agesGrid.data("kendoGrid").dataSource.filter({});
-                        }
+                        monthChangeFilter(value, "BirthDate", agesGrid);
                     }
                 });
 
