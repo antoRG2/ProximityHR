@@ -488,7 +488,7 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                 console.log("Generating getExpirationDatesReport now...");
                 $scope.ed = response.Response;
                 //console.log($scope.ed);
-                $scope.edGrid = {
+                var edGrid = $("#edGrid").kendoGrid({
                     toolbar: ["excel"],
                     excel: {
                         fileName: "expiration dates Report.xlsx",
@@ -514,21 +514,6 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                         },
                         pageSize: 7,
                     },
-
-                    filterable: {
-                        mode: "row",
-                        extra: false,
-                        operators: {
-
-                            date: {
-                                eq: "Is equal to",
-                                gte: "Is after or equal to",
-                                gt: "Is after",
-                                lte: "Is before or equal to",
-                                lt: "Is before"
-                            }
-                        }
-                    },
                     pageable: true,
                     dataBound: function () {
                         this.expandRow(this.tbody.find("tr.k-master-row").first());
@@ -536,34 +521,73 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                     columns: [{
                         field: "Person",
                         title: "Person",
-                        width: "120px",
+                        width: "200px",
                         filterable: false
                     }, {
                         field: "Passport",
                         title: "Passport",
-                        width: "120px",
+                        width: "280px",
                         format: "{0:MM/dd/yyyy}",
-                        filterable: {
-                            ui: "datepicker"
-                        }
+                        headerTemplate: kendo.template($("#ExpDatesFilterPassport").html())
                     }, {
                         field: "License",
                         title: "License",
-                        width: "120px",
+                        width: "280px",
                         format: "{0:MM/dd/yyyy}",
-                        filterable: {
-                            ui: "datepicker"
-                        }
+                        headerTemplate: kendo.template($("#ExpDatesFilterLicense").html())
                     }, {
                         field: "Visa",
                         title: "Visa",
-                        width: "120px",
+                        width: "280px",
                         format: "{0:MM/dd/yyyy}",
-                        filterable: {
-                            ui: "datepicker"
-                        }
+                        headerTemplate: kendo.template($("#ExpDatesFilterVisa").html())
                     }]
-                };// kendo grid
+                }).data("kendoGrid");// kendo grid
+
+
+
+                $("#from, #to,#from1, #to1,#from2, #to2").kendoDatePicker({});
+                $("#filterPassport").on("click", function () {
+                    var isfrom = $("#from").data("kendoDatePicker").value();
+                    var isto = $("#to").data("kendoDatePicker").value();
+                    if (isfrom && isto) {
+                        var filter = [
+                        { field: "Passport", operator: "gte", value: isfrom },
+                        { field: "Passport", operator: "lte", value: isto }
+                        ];
+                        edGrid.dataSource.filter(filter);
+                    } else {
+                        edGrid.dataSource.filter({});
+                    }
+
+                });
+                $("#filterLicense").on("click", function () {
+                    var isfrom = $("#from1").data("kendoDatePicker").value();
+                    var isto = $("#to1").data("kendoDatePicker").value();
+                    if (isfrom && isto) {
+                        var filter = [
+                        { field: "License", operator: "gte", value: isfrom },
+                        { field: "License", operator: "lte", value: isto }
+                        ];
+                        edGrid.dataSource.filter(filter);
+                    } else {
+                        edGrid.dataSource.filter({});
+                    }
+                });
+                $("#filterVisa").on("click", function () {
+                    var isfrom = $("#from2").data("kendoDatePicker").value();
+                    var isto = $("#to2").data("kendoDatePicker").value();
+                    if (isfrom && isto) {
+                        var filter = [
+                        { field: "Visa", operator: "gte", value: isfrom },
+                        { field: "Visa", operator: "lte", value: isto }
+                        ];
+                        edGrid.dataSource.filter(filter);
+                    } else {
+                        edGrid.dataSource.filter({});
+                    }
+
+                });
             } else {
                 console.error("getExpirationDatesReport report didn't load");
             }
