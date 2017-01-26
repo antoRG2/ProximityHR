@@ -80,9 +80,6 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
                 console.log("features are loading!");
                 $rootScope.FeatList = response.Response;
                 //console.log($scope.FeatList);
-                // calling this shit
-                $scope.featExist($scope.FeatList);
-                createPaging();
             } else {
                 console.error('features didnt load');
             }
@@ -91,18 +88,7 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
         promise.error(function (data, status, headers, config) { });
     };
 
-    // Does the feature already exist ? ============================================
-    $scope.featExist = function (feat) {
-        $scope.someFeat = feat;
-        $scope.someFeat.forEach(function (ft) {
-            //console.log('ft name: ' + ft.Name);
-            return ft.Name;
-        });
-    }
 
-    console.log('HEREEEEEEE ' + $rootScope.FeatList);
-
-    $rootScope.loadFeatures(); // calling the function
 
     
 

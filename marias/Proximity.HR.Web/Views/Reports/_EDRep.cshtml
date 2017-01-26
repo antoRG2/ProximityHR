@@ -1,37 +1,41 @@
 ﻿<div id="license" class="notShow report-single-section">
     <div class="panel panel-primary" data-ng-controller="reportsCtrl">
         <div class="panel-heading">Expiration Dates Report</div>
-
+        
         <script type="text/x-kendo-template" id="ExpDatesFilterPassport">
             <div id="ExpDates">
                 Passport <br />
-                <input id="from" style="max-width: 95px; font-size: 12px;" />
-                <input id="to" style="max-width: 95px; font-size: 12px;" />
-                <button id="filterPassport" class="k-button" style=" max-height 30px;"><i class="glyphicon glyphicon-filter"></i></button>
+                <input placeholder="FROM" id="passportFrom" style="max-width: 95px; font-size: 12px;" />
+                <input placeholder="TO" id="passportTo" style="max-width: 95px; font-size: 12px;" />
+                <button id="filterPassport" class="k-button" style=" max-height: 30px;"><i class="glyphicon glyphicon-filter"></i></button>
+                <br /> @*<button id="clearFilterPassport" class="k-button" style="position: relative; max-height: 30px;font-size: 10px;"><i class="glyphicon glyphicon-refresh></i></button>*@
             </div>
         </script>
 
         <script type="text/x-kendo-template" id="ExpDatesFilterLicense">
             <div id="ExpDates">
                 License <br />
-                <input id="from1" style="max-width: 95px; font-size: 12px;" />
-                <input id="to1" style="max-width: 95px;font-size: 12px;" />
+                <input placeholder="FROM" id="licenseFrom" style="max-width: 95px; font-size: 12px;" />
+                <input placeholder="TO" id="licenseTo" style="max-width: 95px;font-size: 12px;" />
                 <button id="filterLicense" class="k-button" style="max-height: 30px;"><i class="glyphicon glyphicon-filter"></i></button>
+                <br /> @*<button id="clearFilterLicense" class="k-button" style="position: relative; max-height: 30px;font-size: 10px;"><i class="glyphicon glyphicon-refresh></i></button>*@
             </div>
         </script>
 
         <script type="text/x-kendo-template" id="ExpDatesFilterVisa">
             <div id="ExpDates">
-                Visa <br />
-                <input id="from2" style="max-width: 95px;font-size: 12px;" />
-                <input id="to2" style="max-width: 95px;font-size: 12px;" />
-                <button id="filterVisa" class="k-button" style=" max-height 30px;"><i class="glyphicon glyphicon-filter"></i></button>
-                @*<button id="clearFilterVisa" class="k-button" style=" max-height: 30px;font-size: 10px;"><i class="glyphicon glyphicon-close></i></button>*@
+                Visa 
+                <br />
+                <input placeholder="FROM" id="visaFrom" style="max-width: 95px;font-size: 12px;" />
+                <input placeholder="TO" id="visaTo" style="max-width: 95px;font-size: 12px;" />
+                <button id="filterVisa" class="k-button" style=" max-height: 30px;"><i class="glyphicon glyphicon-filter"></i></button>
+                <br /> 
             </div>
         </script>
 
 
 
         <div id="edGrid"></div>
+
     </div>
 </div>
