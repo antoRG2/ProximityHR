@@ -257,7 +257,8 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                 console.log("Generating getMaritalStatusReport now...");
                 $scope.ms = response.Response;
                 //console.log($scope.ms);
-                $scope.msGrid = {
+                //$scope.msGrid = {
+                $scope.msGrid = $("#msGrid").kendoGrid({
                     toolbar: ["excel"],
                     excel: {
                         fileName: "Marital Status Report.xlsx",
@@ -279,17 +280,9 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                                 }
                             }
                         },
-                        pageSize: 7,
+                        pageSize: 7
                     },
 
-                    filterable: {
-                        extra: false,
-                        operators: {
-                            string: {
-                                eq: "equal to"
-                            }
-                        }
-                    },
                     pageable: true,
                     dataBound: function () {
                         this.expandRow(this.tbody.find("tr.k-master-row").first());
@@ -303,16 +296,29 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                         field: "Marital_Status",
                         title: "Marital Status",
                         width: "120px",
-                        filterable: {
-                            ui: function (element) {
-                                element.kendoDropDownList({
-                                    dataSource: ["Soltero (a)", "Casado (a)", "Divorciado (a)", "Viudo (a)", "Union Libre", "not specified"],
-                                    optionLabel: "--Select Value--"
-                                });
-                            }
-                        }
+                        headerTemplate: kendo.template($("#MaritalStatusFilter").html())
                     }]
-                };// kendo grid
+                });// kendo grid
+
+                var maritalStatusDropDown = $scope.msGrid.find("#maritalStatus").kendoDropDownList({
+                    autoBind: false,
+                    optionLabel: "Marital Status",
+                    dataSource: ["Soltero (a)", "Casado (a)", "Divorciado (a)", "Viudo (a)", "Union Libre"],
+                    change: function () {
+                        var value = this.value();
+                        if (value) {
+                            var maritalStatus = value;
+
+                            $scope.msGrid.data("kendoGrid").dataSource.filter({
+                                filters: [
+                                    { field: "Marital_Status", operator: "eq", value: maritalStatus}
+                                ]
+                            });
+                        } else {
+                            $scope.msGrid.data("kendoGrid").dataSource.filter({});
+                        }
+                    }
+                });
 
             } else {
                 console.error("getMaritalStatusReport report didn't load");

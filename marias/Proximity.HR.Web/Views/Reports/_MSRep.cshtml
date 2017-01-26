@@ -2,8 +2,12 @@
     <div class="panel panel-primary" data-ng-controller="reportsCtrl">
         <div class="panel-heading">Marital Status Report</div>
 
-        <kendo-grid options="msGrid">
+        <div id="msGrid"></div>
 
-        </kendo-grid>
+        <script type="text/x-kendo-template" id="MaritalStatusFilter">
+            <div id="MaritalStatusDropDown">
+                <input type="search" id="maritalStatus" style="width: 120px" />
+            </div>
+        </script>
     </div>
 </div>
