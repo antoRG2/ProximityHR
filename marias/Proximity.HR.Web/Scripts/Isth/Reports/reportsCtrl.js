@@ -312,11 +312,10 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                     change: function () {
                         var value = this.value();
                         if (value) {
-                            var maritalStatus = value;
 
                             $scope.msGrid.data("kendoGrid").dataSource.filter({
                                 filters: [
-                                    { field: "Marital_Status", operator: "eq", value: maritalStatus}
+                                    { field: "Marital_Status", operator: "eq", value: value }
                                 ]
                             });
                         } else {
@@ -343,7 +342,8 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                 $scope.dem = response.Response;
                 console.log($scope.dem);
 
-                $scope.mainGridOptions = {
+                // $scope.mainGridOptions = {
+                $scope.DemographicsGrid = $("#DemographicsGrid").kendoGrid({
                     toolbar: ["excel"],
                     excel: {
                         fileName: "Demographic Report.xlsx",
@@ -366,17 +366,7 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                                 }
                             }
                         },
-                        pageSize: 7,
-                    },
-                    filterable: {
-                        mode: "row",
-                        extra: false,
-                        operators: {
-                            string: {
-                                contains: "contains",
-                                eq: "Is equal to"
-                            }
-                        }
+                        pageSize: 7
                     },
                     pageable: true,
                     dataBound: function () {
@@ -391,19 +381,33 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                         field: "Country",
                         title: "Country",
                         width: "120px",
-                        filterable: {
-                            ui: function (element) {
-                                element.kendoDropDownList({
-                                    dataSource: ["Costa Rica", "Peru"],
-                                    optionLabel: "--Select Value--"
-                                });
-                            }
-                        }
+                        headerTemplate: kendo.template($("#demographicFilter").html()),
+                        sortable: false
                     }, {
                         field: "City",
                         width: "120px"
                     }]
-                };// kendo grid
+                });// kendo grid
+
+                var demographicsDropDown = $scope.DemographicsGrid.find("#demographic").kendoDropDownList({
+                    autoBind: false,
+                    optionLabel: "Country",
+                    dataSource: ["Costa Rica", "Perú"],
+                    change: function () {
+                        var value = this.value();
+                        if (value) {
+
+                            $scope.DemographicsGrid.data("kendoGrid").dataSource.filter({
+                                filters: [
+                                    { field: "Country", operator: "eq", value: value }
+                                ]
+                            });
+                        } else {
+                            $scope.DemographicsGrid.data("kendoGrid").dataSource.filter({});
+                        }
+                    }
+                });
+
 
             } else {
                 console.error("getDemographicsReport report didn't load");
