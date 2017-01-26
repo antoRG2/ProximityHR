@@ -546,48 +546,42 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
 
 
 
-                $("#from, #to,#from1, #to1,#from2, #to2").kendoDatePicker({});
+                $("#passportFrom, #passportTo,#licenseFrom, #licenseTo,#visaFrom, #visaTo").kendoDatePicker({});
                 $("#filterPassport").on("click", function () {
-                    var isfrom = $("#from").data("kendoDatePicker").value();
-                    var isto = $("#to").data("kendoDatePicker").value();
-                    if (isfrom && isto) {
-                        var filter = [
-                        { field: "Passport", operator: "gte", value: isfrom },
-                        { field: "Passport", operator: "lte", value: isto }
-                        ];
-                        edGrid.dataSource.filter(filter);
-                    } else {
-                        edGrid.dataSource.filter({});
-                    }
-
+                    var from = $("#passportFrom").data("kendoDatePicker").value();
+                    var to = $("#passportTo").data("kendoDatePicker").value();
+                    filterDS(from, to, 'Passport');
                 });
                 $("#filterLicense").on("click", function () {
-                    var isfrom = $("#from1").data("kendoDatePicker").value();
-                    var isto = $("#to1").data("kendoDatePicker").value();
-                    if (isfrom && isto) {
-                        var filter = [
-                        { field: "License", operator: "gte", value: isfrom },
-                        { field: "License", operator: "lte", value: isto }
-                        ];
-                        edGrid.dataSource.filter(filter);
-                    } else {
-                        edGrid.dataSource.filter({});
-                    }
+                    var from = $("#licenseFrom").data("kendoDatePicker").value();
+                    var to = $("#licenseTo").data("kendoDatePicker").value();
+                    filterDS(from, to, 'License');
                 });
                 $("#filterVisa").on("click", function () {
-                    var isfrom = $("#from2").data("kendoDatePicker").value();
-                    var isto = $("#to2").data("kendoDatePicker").value();
-                    if (isfrom && isto) {
+                    var from = $("#visaFrom").data("kendoDatePicker").value();
+                    var to = $("#visaTo").data("kendoDatePicker").value();
+                    filterDS(from, to, 'Visa');
+
+                });
+
+                $('#clearFilterVisa, #clearFilterLicense, #clearFilterVisa').on('click', function () {
+                    edGrid.dataSource.filter({});
+                });
+
+                function filterDS(from, to, name) {
+                    var isFrom = from;
+                    var isTo = to;
+                    if (isFrom && isTo) {
                         var filter = [
-                        { field: "Visa", operator: "gte", value: isfrom },
-                        { field: "Visa", operator: "lte", value: isto }
+                        { field: name, operator: "gte", value: isFrom },
+                        { field: name, operator: "lte", value: isTo }
                         ];
                         edGrid.dataSource.filter(filter);
                     } else {
                         edGrid.dataSource.filter({});
                     }
+                }// end filterDS
 
-                });
             } else {
                 console.error("getExpirationDatesReport report didn't load");
             }
