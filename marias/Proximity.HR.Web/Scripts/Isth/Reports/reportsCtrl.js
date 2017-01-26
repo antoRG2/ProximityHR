@@ -187,7 +187,7 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                                 fields: {
                                     name: { type: "string" },
                                     started_on: { type: "date" },
-                                    working_years: { type: "number" }
+                                    working_years: { type: "string" }
                                 }
                             }
                         },
@@ -195,15 +195,8 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                     },
                     filterable: {
                         mode: "row",
-                        extra: false,
-                        operators: {
-                            string: {
-                                contains: "contains"
-                            },
-                            number: {
-                                eq: "Is equal to"
-                            }                            
-                        }
+                        extra: false
+                       
                     },
                     pageable: true,
                     dataBound: function () {
@@ -212,7 +205,13 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                     columns: [{
                         field: "name",
                         title: "Person",
-                        width: "120px"
+                        width: "120px",
+                        filterable: {
+                            cell: {
+                                showOperators: false,
+                                operator: "contains"
+                            }
+                        }
                     }, {
                         field: "started_on",
                         title: "Started On",
@@ -228,12 +227,18 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                     }, {
                         field: "working_years",
                         title: "Working years",
-                        width: "120px"
+                        width: "120px",
+                        filterable: {
+                            cell: {
+                                showOperators: false,
+                                operator: "startswith"
+                            }
+                        }
                     }]
                 });// kendo grid
                 var averageReport = avwyGrid.find("#monthRange").kendoDropDownList({
                     autoBind: false,
-                    optionLabel: "Birth Date",
+                    optionLabel: "Started On",
                     dataSource: monthDataSource,
                     change: function () {
                         var value = this.value();
