@@ -368,6 +368,10 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                         },
                         pageSize: 7
                     },
+                    filterable: {
+                        mode: "row",
+                        extra: false
+                    },
                     pageable: true,
                     dataBound: function () {
                         this.expandRow(this.tbody.find("tr.k-master-row").first());
@@ -381,6 +385,11 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                         field: "Country",
                         title: "Country",
                         width: "120px",
+                        filterable: {
+                            cell: {
+                                enabled: false
+                            }
+                        },
                         headerTemplate: kendo.template($("#demographicFilter").html()),
                         sortable: false
                     }, {
