@@ -21,6 +21,33 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
         $scope.IsFormValid = isValid;
     });
 
+    //Edit Feature Modal
+    $scope.open = function (size, enabled, item) {
+        var modalInstance = $modal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'myModalContent.html',
+            controller: 'ModalInstanceCtrl',
+            size: size,
+            resolve: {
+                features: function () {
+                    return {} //$scope.Technology.Features;
+                },
+                Selected: function () {
+                    return item;
+                },
+                allowEdit: function () { return enabled; },
+                newFeature: {}
+            }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+
+    };
+
     //create pagination============================================================
     function createPaging() {
         $scope.$watch("currentPage + numPerPage", function () {
@@ -208,9 +235,39 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
     };
 }]);
 
+app.controller('ModalInstanceCtrl', ['$scope', '$timeout', '$modalInstance', 'features', 'Selected', 'allowEdit', 'newFeature', 'skillsSetService',
+    function ($scope, $timeout, $modalInstance, features, Selected, allowEdit, newFeature, skillsSetService) {
 
+        if (allowEdit) {
+            console.log(Selected);
+            $scope.Features = Selected;
+            $scope.formTitle = "Edit Feature";
+            $scope.allowDelete = true;
+        } else {
+            $scope.Features = newFeature;
+            $scope.formTitle = "Add new Feature";
+            $scope.allowDelete = false;
+        }
 
+        $scope.max = 1;
+        $scope.isReadonly = false;
 
+        //Apply button click
+        $scope.ok = function (editedItem) {
+            if (!allowEdit) {
+                if (newFeature.Name !== "")
+                    features.push(newFeature);
+            } else {
+                skillsSetService.UpdateFeature(editedItem);
+            }
 
+            $modalInstance.close();
+        };
 
+        //Close modal form
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    }
 
+]);

@@ -39,7 +39,7 @@
                                                                     <h3><span>{{item.Name}}</span></h3>
                                                                     <input type="hidden" class="form-control" name="TechnologyFeature" ng-model="TechnologyFeature[$index]" value="{{item.Id}}"/>
                                                                 </div>
-                                                                <div class="row col-sm-4 feedback-rating-row" ng-init="rate=item.Level">
+                                                                <div class="row col-sm-3 feedback-rating-row" ng-init="rate=item.Level">
 
                                                                     <rating ng-model="rate"
                                                                             max="5"
@@ -49,7 +49,7 @@
                                                                             style="cursor: pointer;" ng-click="addTechFeat(item.Id,rate,isDesirable,isTeachable)"/>
 
                                                                 </div>
-                                                                <div class="col-sm-4" ng-init="isDesirable=item.Desirable">
+                                                                <div class="col-sm-3" ng-init="isDesirable=item.Desirable">
                                                                     <label>
                                                                         I want training!
                                                                         <switch name="Desirable" on="Yes" off="No" ng-model="isDesirable" ng-change="addTechFeat(item.Id,rate,isDesirable,isTeachable)" ng-disabled="isTeachable"/>
@@ -61,9 +61,14 @@
                                                                         <switch class="green" name="Teachable" on="Yes" off="No" ng-model="isTeachable" ng-change="addTechFeat(item.Id,rate,isDesirable,isTeachable)" ng-disabled="isDesirable"/>
                                                                     </label>
                                                                 </div>
+                                                                <div class="col-sm-2">
+                                                                    <a  ng-click="open('lg',true, item)">
+                                                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
                                                         </li>
-                                                        <li class="ngFormFeat--item"> 
+                                                        <li class="ngFormFeat--item">
                                                             <div class="row">
                                                                 <div class="container-fluid">
                                                                     <div class="col-sm-12">
@@ -77,7 +82,7 @@
                                                                                                id="featureName"
                                                                                                name="featureName"
                                                                                                placeholder="Feature Name..."
-                                                                                              
+
                                                                                                ng-model="Featuress.Name">
                                                                                     </div>
                                                                                 </div>
@@ -124,7 +129,6 @@
                     </div>
                 </fieldset>
             </form>
-        </div>
-        @{ @Html.Partial("_modal"); }
+        </div>                
     </div>
 </section>

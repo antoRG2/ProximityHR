@@ -1,10 +1,8 @@
-﻿using Proximity.HR.Data;
+﻿using System;
+using System.Web.Http;
 using Proximity.HR.Models.Dto;
-using Proximity.HR.Models.ReportsDto;
 using Proximity.HR.Models.ErrorHandler;
 using Proximity.HR.Services.Service;
-using System;
-using System.Web.Http;
 
 namespace Proximity.HR.Web.Controllers
 {
@@ -30,7 +28,25 @@ namespace Proximity.HR.Web.Controllers
             return result;
         }
 
-        [ActionName("GetTechnologiesById")]
+        [ActionName("UpdateFeature")]
+        public GenericResponse<bool> UpdateFeature(FeatureDto feature)
+        {
+            var result = new BasicResponse<bool>();
+
+            try
+            {
+                result.Response = _service.UpdateFeature(feature);
+                result.Status = ResponseCode.Success;
+            }
+            catch (Exception e)
+            {
+                result.Status = ResponseCode.Error;
+                result.Exception = e;
+            }
+
+            return result;
+        }
+
         public GenericResponse<FeaturesDto> GetTechnologiesById(int Id)
         {
             var result = new BasicResponse<FeaturesDto>();
