@@ -96,9 +96,6 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
     $scope.saveFeature = function (id) {
         $scope.Featuress.Technology = id;
         if ($scope.Featuress.Name !== "") {
-            // foreach
-            console.log(`returning ft.Name ${$scope.featExist($rootScope.FeatList)}`);
-            //if $scope.Features.Name !== $scope.FeatList.Name
             var data = [$scope.Featuress.Technology, $scope.Featuress.Name, $scope.Featuress.Detail];
             var promise = skillsSetService.PostFeature($scope.Featuress);
             promise.success(function (response) {
@@ -158,7 +155,7 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
                     }, 1);
                 }
                 $scope.allowEdition = true;
-                LoadTechnologies();
+                $rootScope.LoadTechnologies();
             });
 
             promise.error(function (data, status, headers, config) {
