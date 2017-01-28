@@ -85,7 +85,7 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
             var promise = skillsSetService.GetTechnologies($rootScope.EmployeeID);
             promise.success(function (response) {
                 if (response.Status == 1) {
-                    console.log("Tecnologies loading success");
+                    console.log("Technologies loading success");
                     $scope.Technologies = response.Response;
                     //console.log($scope.Technologies);
                     createPaging();
@@ -106,7 +106,13 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
             if (response.Status === 1) {
                 console.log("features are loading!");
                 $rootScope.FeatList = response.Response;
-                //console.log($scope.FeatList);
+                console.info($rootScope.FeatList);
+                //$rootScope.FeatList.forEach(function (ft) {
+                //    console.info(ft.Name + "features list from function");
+                //    return ft.Name;
+                   
+                //})//foreach
+             
             } else {
                 console.error('features didnt load');
             }
@@ -114,9 +120,7 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
 
         promise.error(function (data, status, headers, config) { });
     };
-
-
-
+    $rootScope.loadFeatures();
     
 
 /*======================================SAVE FEATURE()====================================================*/
@@ -130,12 +134,12 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
                     $timeout(function () {
                         $scope.Featuress.Name = "";
                         $scope.Featuress.Detail = "";
-                        swal("Great", "Data successfully processed!", "success");
+                        swal("Great", "The feature was added!", "success");
                         $rootScope.LoadEmployees();
                     }, 1);
                 } else {
                     $timeout(function () {
-                        swal("Oops...", "Something went wrong!", "error");
+                        swal("Oops...", "There was an error while trying to save feature", "error");
                         console.log(data);
                     }, 1);
                 }
@@ -171,13 +175,13 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
                 if (response.Status == 1) {
                     $timeout(function () {
                         $scope.lockSectionClass = 'SectionLockOff';
-                        swal("Great", "Data successfully processed!", "success");
+                        swal("Great", "Skillset was saved!", "success");
                         $rootScope.LoadEmployees();
                     }, 1);
                 } else {
                     $timeout(function () {
                         $scope.lockSectionClass = 'SectionLockOff';
-                        swal("Oops...", "Something went wrong!", "error");
+                        swal("Oops...", "Something went wrong while saving your skillset!", "error");
                         console.log(data);
                     }, 1);
                 }
@@ -188,7 +192,7 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
             promise.error(function (data, status, headers, config) {
                 $timeout(function () {
                     $scope.lockSectionClass = 'SectionLockOff';
-                    swal("Oops...", "Something went wrong!", "error");
+                    swal("Oops...", "Something went wrong processing the request!", "error");
                     console.log(data);
                 }, 1);
             });
