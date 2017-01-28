@@ -28,3 +28,11 @@
     -webkit-box-shadow: none;
     box-shadow: none;
 }
+
+.anchor-pointer {
+    cursor: pointer;
+}
+
+.anchor-pointer .fa-pencil-square-o {
+    font-size: 18px;
+}
