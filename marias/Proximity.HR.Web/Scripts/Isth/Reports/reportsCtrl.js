@@ -609,9 +609,28 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
 
                 });
 
-                $('#clearFilterVisa, #clearFilterLicense, #clearFilterVisa').on('click', function () {
-                    edGrid.dataSource.filter({});
+                $("#filterPassport").on("dblclick", function () {
+                    var from = "#passportFrom";
+                    var to = "#passportTo";
+                    clearFilters(from, to);
                 });
+                $("#filterLicense").on("dblclick", function () {
+                    var from ="#licenseFrom";
+                    var to = "#licenseTo";
+                    clearFilters(from, to);
+                });
+                $("#filterVisa").on("dblclick", function () {
+                    var from = "#visaFrom";
+                    var to = "#visaTo";
+                    clearFilters(from, to);
+
+                });
+
+                function clearFilters(from, to) {
+                    var isFrom = $(from).data("kendoDatePicker").value("");
+                    var isTo = $(to).data("kendoDatePicker").value("");
+                    edGrid.dataSource.filter({});
+                }
 
                 function filterDS(from, to, name) {
                     var isFrom = from;
@@ -626,6 +645,8 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                         edGrid.dataSource.filter({});
                     }
                 }// end filterDS
+
+                
 
             } else {
                 console.error("getExpirationDatesReport report didn't load");
