@@ -19,7 +19,6 @@ function ($scope, $rootScope, $modal, $log, skillsService, $timeout, $window) {
         promise.success(function (response) {
             if (response.Status === 1) {
                 $scope.Technologiess = response.Response;
-                console.log($scope.Technologiess + " noseee");
                 $scope.techExist($scope.Technologiess);
             } else {
                 $scope.error = "Error";

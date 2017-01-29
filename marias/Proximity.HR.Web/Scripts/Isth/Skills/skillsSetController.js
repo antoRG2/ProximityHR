@@ -105,7 +105,7 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
         var promise = skillsSetService.GetFeatures();
         promise.success(function (response) {
             if (response.Status === 1) {
-                console.log("features are loading!");
+                //console.log("features are loading!");
                 $rootScope.FeatList = response.Response;
                 //console.info($rootScope.FeatList);
                 $scope.featExist($rootScope.FeatList);
