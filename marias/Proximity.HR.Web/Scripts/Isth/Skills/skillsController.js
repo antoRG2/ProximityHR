@@ -2,11 +2,11 @@
     ['$scope', '$rootScope', '$modal', '$log', 'skillsService', '$timeout', '$window',
 function ($scope, $rootScope, $modal, $log, skillsService, $timeout, $window) {
     $scope.SelectFeature = 0;
-    $scope.technologyName = "name";
-    $scope.technologyDescription = "decription";
     $scope.IsFormSubmitted = false;
     $scope.IsFormValid = false;
     $scope.allowEdition = true;
+    $scope.allowEditionBtn = true;
+    $scope.btnHide = false;
     $scope.lockSectionClass = 'SectionLockOff';
     $scope.$watch("technologyForm.$valid", function (isValid) {
         $scope.IsFormValid = isValid;
@@ -18,8 +18,9 @@ function ($scope, $rootScope, $modal, $log, skillsService, $timeout, $window) {
         var promise = skillsService.GetTechnologies();
         promise.success(function (response) {
             if (response.Status === 1) {
-
                 $scope.Technologiess = response.Response;
+                console.log($scope.Technologiess + " noseee");
+                $scope.techExist($scope.Technologiess);
             } else {
                 $scope.error = "Error";
             }
@@ -28,14 +29,33 @@ function ($scope, $rootScope, $modal, $log, skillsService, $timeout, $window) {
         });
     };
 
-    //tech selected
+    //============================================================ technology exist ?
+    $scope.techExist = function (techList) {
+        var userInput = $scope.Technology.Name;
+        techList.forEach(function (tech) {
+            var techName = tech.Name;
+            //console.info(techName.toLowerCase() + " featureName " + userInput.toLowerCase());
+            if (userInput.toLowerCase() === techName.toLowerCase()) {
+                $scope.msg = "The technology already exists";
+                $scope.allowEditionBtn = true;
+                exit;
+
+            } else {
+                $scope.msg = "";
+                $scope.allowEditionBtn = false;
+            }
+        })//foreach
+    }// techList
+
+
+    //=============================================================tech selected
 
     $scope.TechSelected = function () {
         $timeout(loadTechnology, 1);
     };
 
 
-    //save technology
+    //===========================================================save technology
     $scope.saveTechnology = function () {
         $scope.IsFormSubmitted = true;
         if ($scope.IsFormValid) {
@@ -67,6 +87,7 @@ function ($scope, $rootScope, $modal, $log, skillsService, $timeout, $window) {
 
 
                 $scope.allowEdition = true;
+                $scope.allowEditionBtn = true;
                 $rootScope.LoadTechnologies();
             });
 
@@ -78,22 +99,25 @@ function ($scope, $rootScope, $modal, $log, skillsService, $timeout, $window) {
                 }, 1);
             });
             $scope.allowEdition = true;
+            $scope.allowEditionBtn = true;
         }
     };
 
 
-    //LoadTechnology
+    //===============================================================LoadTechnology
     function loadTechnology () {
         $scope.allowEdition = false;
+        $scope.allowEditionBtn = false;
         $scope.Technology = $scope.selectedTechnology.originalObject;
         $scope.TechnologyId = $scope.selectedTechnology.originalObject.Id;
     };
 
-    //2) add new button
+    //2)=============================================================== add new button
 
     $scope.AddNew = function () {
 
         $scope.allowEdition = false;
+        $scope.allowEditionBtn = false;
         $scope.Technology = { "Id": 0, "Name": "", "Detail": "", "Enabled": null, "CreatedBy": "", "CreatedDate": null, "EditedBy": "", "EditedDate": null, "Features": [] };
         $scope.TechnologyId = 0;
         var element = $window.document.getElementById("txtTechnologyName");

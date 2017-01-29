@@ -8,6 +8,7 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
     $scope.IsForm2Submitted = false;
     $scope.IsFormValid = false;
     $scope.allowEdition = true;
+    $scope.btnDis = false;
     $scope.editedby = 'Admin';
     $scope.filteredTechnologies = [];
     $scope.someFeat = [];
@@ -106,13 +107,9 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
             if (response.Status === 1) {
                 console.log("features are loading!");
                 $rootScope.FeatList = response.Response;
-                console.info($rootScope.FeatList);
-                //$rootScope.FeatList.forEach(function (ft) {
-                //    console.info(ft.Name + "features list from function");
-                //    return ft.Name;
-                   
-                //})//foreach
-             
+                //console.info($rootScope.FeatList);
+                $scope.featExist($rootScope.FeatList);
+                
             } else {
                 console.error('features didnt load');
             }
@@ -120,9 +117,28 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
 
         promise.error(function (data, status, headers, config) { });
     };
-    $rootScope.loadFeatures();
     
 
+    $scope.featExist = function (ftList) {
+        var userInput = $scope.Featuress.Name;
+        ftList.forEach(function (ft) {
+            var ftName = ft.Name;
+            //console.info(ftName.toLowerCase() + " featureName " + userInput.toLowerCase());
+            if (userInput.toLowerCase() === ftName.toLowerCase()) {
+                $scope.msg = "The feature already exists";
+                $scope.btnDis = true;
+                exit;
+
+            }else {
+                $scope.msg = "";
+                $scope.btnDis = false;
+            }
+        })//foreach
+    }// featList
+    
+//else if (userInput.toLowerCase().match(/^ftName.toLowerCase().*$/)) {
+//        $scope.warning = "It exists " + tName.toLowerCase() + "already";
+//    }
 /*======================================SAVE FEATURE()====================================================*/
     $scope.saveFeature = function (id) {
         $scope.Featuress.Technology = id;

@@ -56,7 +56,10 @@
 
                                         <label for="number"><i class="fa fa-desktop" aria-hidden="true"></i> Technology Name:</label>
                                         <span style="color: red" class="error" ng-show="(technologyForm.file.$dirty || IsFormSubmitted) && technologyForm.txtTechnologyName.$error.required">technology Name required!</span>
-                                        <input type="text" class="form-control" name="txtTechnologyName" id="txtTechnologyName" data-ng-model="Technology.Name" ng-disabled="allowEdition" placeholder=" technology Name..." required />
+                                        <div ng-if="msg" class="alert alert-danger" role="alert">
+                                            <strong><i class="fa fa-warning" aria-hidden="true"></i> Error!</strong> {{msg}}
+                                        </div>
+                                        <input type="text" class="form-control" name="txtTechnologyName" id="txtTechnologyName" data-ng-model="Technology.Name" ng-disabled="allowEdition" placeholder=" technology Name..." required ng-blur="LoadTechnologiesFeatures()" />
                                         <br />
 
 
@@ -68,7 +71,7 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="number"><i class="fa fa-tags" aria-hidden="true"></i> Features:</label>
-                                        <select style="width: 100%;" size="7" ng-model="currentItems" 
+                                        <select style="width: 100%;" size="7" ng-model="currentItems"
                                                 ng-multiple="false"
                                                 ng-options="opt.Name for opt in Technology.Features" selected-model="testModel" ng-click="setActiveSkill(opt)"></select>
 
@@ -81,16 +84,16 @@
                                             Edit a feature
                                         </span>
                                         @*<span id="deleteFeature" class="skillOption" ng-click="deleteFeature()" ng-hide="allowEdition">
-                                            <img src="~/Images/remove-8-24.png" />
-                                            Delete a feature
-                                        </span>*@
+                                    <img src="~/Images/remove-8-24.png" />
+                                    Delete a feature
+                                </span>*@
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-12" style="text-align: center;">
-                        <button type="submit" class="btn btn-lg btn-primary" ng-disabled="allowEdition"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
+                        <button type="submit" class="btn btn-lg btn-primary" ng-disabled="allowEditionBtn"><i class="fa fa-floppy-o" aria-hidden="true"></i> Save</button>
                     </div>
                 </fieldset>
             </form>
