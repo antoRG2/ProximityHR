@@ -95,14 +95,14 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
     };
 
     /*======================================== load features ========================================*/
-    $rootScope.loadFeatures = function () {
+    $rootScope.loadFeatures = function (name) {
         var promise = skillsSetService.GetFeatures();
         promise.success(function (response) {
             if (response.Status === 1) {
                 //console.log("features are loading!");
                 $rootScope.FeatList = response.Response;
                 //console.info($rootScope.FeatList);
-                $scope.featExist($rootScope.FeatList);
+                $scope.featExist($rootScope.FeatList, name);
                 
             } else {
                 console.error('features didnt load');
@@ -113,8 +113,8 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
     };
     
 
-    $scope.featExist = function (ftList) {
-        var userInput = $scope.Featuress.Name;
+    $scope.featExist = function (ftList, name) {
+        var userInput = name;
         ftList.forEach(function (ft) {
             var ftName = ft.Name;
             //console.info(ftName.toLowerCase() + " featureName " + userInput.toLowerCase());
