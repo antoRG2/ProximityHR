@@ -16,11 +16,11 @@
             </div>
             <div class="col-sm-4">
                 <div class="padded-row">
-                    <angucomplete id="ex1"
-                                  placeholder="Select employee"
+                    <angucomplete id="searchByName"
+                                  placeholder="Search by Name"
                                   pause="100"
                                   selectedobject="selectedCountry"
-                                  callback-fn="myFunc()"
+                                  callback-fn="loadEmployeesTimer()"
                                   localdata="Employees"
                                   searchfields="FullName"
                                   titlefield="FullName"
@@ -29,8 +29,22 @@
                                   matchclass="highlight" />
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-4">
+                <div class="padded-row">
+                    <angucomplete id="searchByEmployeeId"
+                                  placeholder="Search by Employee Id"
+                                  pause="100"
+                                  selectedobject="selectedCountry"
+                                  callback-fn="loadEmployeesTimer()"
+                                  localdata="Employees"
+                                  searchfields="EmployeeNumber"
+                                  titlefield="EmployeeNumber"
+                                  minlength="1"
+                                  inputclass="form-control form-control-small"
+                                  matchclass="highlight" />
+                </div>
             </div>
+            @*<div class="col-sm-6"></div>*@
         </div>
         <div class="row">
             <form novalidate name="f1" ng-submit="saveDetails()" accordeon-show>

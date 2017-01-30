@@ -45,14 +45,14 @@ app.controller("employeeController",
                });
            };
 
-           $scope.myFunc = function (test) {
-               $timeout(callAtInterval, 1);
-           };
-
-           function callAtInterval() {
+           function loadEmployeescall() {
                loadEmployeeById($scope.selectedCountry.originalObject.Id);
            };
 
+           $scope.loadEmployeesTimer = function () {
+               $timeout(loadEmployeescall, 1);
+           };
+          
            //Search
            $scope.searchEmployeeDetails = function () {
                selectEmployeeDetails($scope.employeeId);
@@ -265,7 +265,7 @@ app.controller("employeeController",
            };
 
            function selectEmployeeDetails(employeeNumber) {
-
+               debugger;
                $http.get('/api/employee/GetEmployeeById/', { params: { employeeId: employeeNumber } })
                    .success(function (data) {
                        employeeObjToScope(data);
@@ -467,23 +467,6 @@ app.controller("employeeController",
 
                loadProfileDatePickers();
            };
-
-           function loadEmployeeByNameCopy(userName) {
-               var userInfo = $cookies.get('userData');
-               if (userInfo !== null) {
-                   var promise = employeeService.GetEmployeeByName(userInfo);
-                   promise.success(function (response) {
-                       if (response.Status === 1) {
-                           employeeObjToScope(response);
-                           getStates2();
-                       } else {
-                           console.log(response);
-                           $scope.error = "An Error has occured while loading employee!";
-                       }
-                   });
-               }
-           };
-
        }]);
 
 app.directive('accordeonShow', function () {
