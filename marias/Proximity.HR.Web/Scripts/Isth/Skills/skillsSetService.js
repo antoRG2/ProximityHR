@@ -11,6 +11,11 @@
                         headers: { 'Content-Type': 'application/json' }
                     });
         },
+        UpdateFeature: function(data) {
+            return $http.post("api/Features/UpdateFeature", JSON.stringify(data), {
+                headers: { 'Content-Type': 'application/json' }
+            });
+        },
         PostFeature: function (data) {
             data.Enabled = true;
             data.CreatedBy = "admin";

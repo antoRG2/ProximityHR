@@ -117,17 +117,28 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                     columns: [{
                         field: "EMPLOYEE",
                         title: "Person",
-                        width: "120px"
+                        width: "120px",
+                        filterable: {
+                            cell: {
+                                showOperators: false
+                            }
+                        }
                     }, {
                         field: "FEATURE",
                         title: "Feature",
-                        width: "120px"
+                        width: "120px",
+                        filterable: {
+                            cell: {
+                                showOperators: false
+                            }
+                        }
                     }, {
                         field: "LEVEL",
                         title: "Level",
                         width: "120px",
                         filterable: {
                             cell: {
+                                showOperators: false,
                                 template: function (args) {
                                     args.element.kendoDropDownList({
                                         dataSource: args.dataSource,
@@ -394,7 +405,12 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                         sortable: false
                     }, {
                         field: "City",
-                        width: "120px"
+                        width: "120px",
+                        filterable: {
+                            cell: {
+                                showOperators: false
+                            }
+                        }
                     }]
                 });// kendo grid
 
@@ -609,9 +625,28 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
 
                 });
 
-                $('#clearFilterVisa, #clearFilterLicense, #clearFilterVisa').on('click', function () {
-                    edGrid.dataSource.filter({});
+                $("#filterPassport").on("dblclick", function () {
+                    var from = "#passportFrom";
+                    var to = "#passportTo";
+                    clearFilters(from, to);
                 });
+                $("#filterLicense").on("dblclick", function () {
+                    var from ="#licenseFrom";
+                    var to = "#licenseTo";
+                    clearFilters(from, to);
+                });
+                $("#filterVisa").on("dblclick", function () {
+                    var from = "#visaFrom";
+                    var to = "#visaTo";
+                    clearFilters(from, to);
+
+                });
+
+                function clearFilters(from, to) {
+                    var isFrom = $(from).data("kendoDatePicker").value("");
+                    var isTo = $(to).data("kendoDatePicker").value("");
+                    edGrid.dataSource.filter({});
+                }
 
                 function filterDS(from, to, name) {
                     var isFrom = from;
@@ -626,6 +661,8 @@ function ($scope, $rootScope, reportsService, $timeout, $window, $http, $route, 
                         edGrid.dataSource.filter({});
                     }
                 }// end filterDS
+
+                
 
             } else {
                 console.error("getExpirationDatesReport report didn't load");

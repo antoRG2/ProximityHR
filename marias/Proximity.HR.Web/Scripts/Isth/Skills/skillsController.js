@@ -2,11 +2,11 @@
     ['$scope', '$rootScope', '$modal', '$log', 'skillsService', '$timeout', '$window',
 function ($scope, $rootScope, $modal, $log, skillsService, $timeout, $window) {
     $scope.SelectFeature = 0;
-    $scope.technologyName = "name";
-    $scope.technologyDescription = "decription";
     $scope.IsFormSubmitted = false;
     $scope.IsFormValid = false;
     $scope.allowEdition = true;
+    $scope.allowEditionBtn = true;
+    $scope.btnHide = false;
     $scope.lockSectionClass = 'SectionLockOff';
     $scope.$watch("technologyForm.$valid", function (isValid) {
         $scope.IsFormValid = isValid;
@@ -18,8 +18,8 @@ function ($scope, $rootScope, $modal, $log, skillsService, $timeout, $window) {
         var promise = skillsService.GetTechnologies();
         promise.success(function (response) {
             if (response.Status === 1) {
-
                 $scope.Technologiess = response.Response;
+                $scope.techExist($scope.Technologiess);
             } else {
                 $scope.error = "Error";
             }
@@ -28,14 +28,33 @@ function ($scope, $rootScope, $modal, $log, skillsService, $timeout, $window) {
         });
     };
 
-    //tech selected
+    //============================================================ technology exist ?
+    $scope.techExist = function (techList) {
+        var userInput = $scope.Technology.Name;
+        techList.forEach(function (tech) {
+            var techName = tech.Name;
+            //console.info(techName.toLowerCase() + " featureName " + userInput.toLowerCase());
+            if (userInput.toLowerCase() === techName.toLowerCase() && userInput !== "") {
+                $scope.msg = "The technology already exists";
+                $scope.allowEditionBtn = true;
+                exit;
+
+            } else {
+                $scope.msg = "";
+                $scope.allowEditionBtn = false;
+            }
+        })//foreach
+    }// techList
+
+
+    //=============================================================tech selected
 
     $scope.TechSelected = function () {
         $timeout(loadTechnology, 1);
     };
 
 
-    //save technology
+    //===========================================================save technology
     $scope.saveTechnology = function () {
         $scope.IsFormSubmitted = true;
         if ($scope.IsFormValid) {
@@ -67,6 +86,7 @@ function ($scope, $rootScope, $modal, $log, skillsService, $timeout, $window) {
 
 
                 $scope.allowEdition = true;
+                $scope.allowEditionBtn = true;
                 $rootScope.LoadTechnologies();
             });
 
@@ -78,22 +98,25 @@ function ($scope, $rootScope, $modal, $log, skillsService, $timeout, $window) {
                 }, 1);
             });
             $scope.allowEdition = true;
+            $scope.allowEditionBtn = true;
         }
     };
 
 
-    //LoadTechnology
+    //===============================================================LoadTechnology
     function loadTechnology () {
         $scope.allowEdition = false;
+        $scope.allowEditionBtn = false;
         $scope.Technology = $scope.selectedTechnology.originalObject;
         $scope.TechnologyId = $scope.selectedTechnology.originalObject.Id;
     };
 
-    //2) add new button
+    //2)=============================================================== add new button
 
     $scope.AddNew = function () {
 
         $scope.allowEdition = false;
+        $scope.allowEditionBtn = false;
         $scope.Technology = { "Id": 0, "Name": "", "Detail": "", "Enabled": null, "CreatedBy": "", "CreatedDate": null, "EditedBy": "", "EditedDate": null, "Features": [] };
         $scope.TechnologyId = 0;
         var element = $window.document.getElementById("txtTechnologyName");
@@ -169,75 +192,3 @@ function ($scope, $rootScope, $modal, $log, skillsService, $timeout, $window) {
             $scope.Technology.Features.splice(index, 1);        }
     };
 }]);
-
-app.controller('ModalInstanceCtrl', ['$scope', '$timeout', '$modalInstance', 'features', 'Selected', 'allowEdit', 'newFeature',
-    function ($scope, $timeout, $modalInstance, features, Selected, allowEdit, newFeature) {
-
-        if (allowEdit) {
-            console.log(Selected);
-            $scope.Features = Selected[0];
-            $scope.formTitle = "Edit Feature";
-            $scope.allowDelete = true;
-        } else {
-            $scope.Features = newFeature;
-            $scope.formTitle = "Add new Feature";
-            $scope.allowDelete = false;
-        }
-
-        $scope.max = 1;
-        $scope.isReadonly = false;
-
-        //Apply button click
-        $scope.ok = function () {
-            if (!allowEdit) {
-                if (newFeature.Name !== "")
-                    features.push(newFeature);
-            }
-
-            $modalInstance.close();
-        };
-
-        //Close modal form
-        $scope.cancel = function () {
-            $modalInstance.dismiss('cancel');
-        };
-
-        //Add feature====================================================================================
-        $scope.addItem = function (index) {
-            if (!$scope.newItemName)
-                return;
-
-            if ($scope.newItemName !== "") {
-                if (allowEdit) {
-                    features[Selected].Technologiess.push({
-                        Name: $scope.newItemName,
-                        Desirable: false,
-                        Teachable: false,
-                        Level: 0
-                    });
-                    $scope.skills = skills[Selected];
-                    $scope.$apply();
-                } else {
-                    $scope.skills.Technologiess.push({
-                        Name: $scope.newItemName,
-                        Desirable: false,
-                        Teachable: false,
-                        Level: 0
-                    });
-                }
-            }
-
-        };
-
-        //Delete feature=============================================================
-        $scope.deleteItem = function (index) {
-            skills[Selected].Technologiess.splice(index, 1);
-        };
-    }
-
-]);
-
-
-
-
-

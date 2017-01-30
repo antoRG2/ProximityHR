@@ -37,33 +37,38 @@
                                                             <div class="row" style="padding: 5px;">
                                                                 <div class="col-sm-2">
                                                                     <h3><span>{{item.Name}}</span></h3>
-                                                                    <input type="hidden" class="form-control" name="TechnologyFeature" ng-model="TechnologyFeature[$index]" value="{{item.Id}}"/>
+                                                                    <input type="hidden" class="form-control" name="TechnologyFeature" ng-model="TechnologyFeature[$index]" value="{{item.Id}}" />
                                                                 </div>
-                                                                <div class="row col-sm-4 feedback-rating-row" ng-init="rate=item.Level">
+                                                                <div class="row col-sm-3 feedback-rating-row" ng-init="rate=item.Level">
 
                                                                     <rating ng-model="rate"
                                                                             max="5"
                                                                             on-hover="hovering_over(value)"
                                                                             on-leave="overStar = null"
                                                                             titles="['poor','basic','good','excellent','expert']"
-                                                                            style="cursor: pointer;" ng-click="addTechFeat(item.Id,rate,isDesirable,isTeachable)"/>
+                                                                            style="cursor: pointer;" ng-click="addTechFeat(item.Id,rate,isDesirable,isTeachable)" />
 
                                                                 </div>
-                                                                <div class="col-sm-4" ng-init="isDesirable=item.Desirable">
+                                                                <div class="col-sm-3" ng-init="isDesirable=item.Desirable">
                                                                     <label>
                                                                         I want training!
-                                                                        <switch name="Desirable" on="Yes" off="No" ng-model="isDesirable" ng-change="addTechFeat(item.Id,rate,isDesirable,isTeachable)" ng-disabled="isTeachable"/>
+                                                                        <switch name="Desirable" on="Yes" off="No" ng-model="isDesirable" ng-change="addTechFeat(item.Id,rate,isDesirable,isTeachable)" ng-disabled="isTeachable" />
                                                                     </label>
                                                                 </div>
                                                                 <div class="col-sm-2" ng-init="isTeachable=item.Teachable">
                                                                     <label>
                                                                         I can teach!
-                                                                        <switch class="green" name="Teachable" on="Yes" off="No" ng-model="isTeachable" ng-change="addTechFeat(item.Id,rate,isDesirable,isTeachable)" ng-disabled="isDesirable"/>
+                                                                        <switch class="green" name="Teachable" on="Yes" off="No" ng-model="isTeachable" ng-change="addTechFeat(item.Id,rate,isDesirable,isTeachable)" ng-disabled="isDesirable" />
                                                                     </label>
                                                                 </div>
+                                                                <div class="col-sm-2">
+                                                                    <a class="anchor-pointer" ng-click="open('lg',true, item)">
+                                                                        <i class="fa fa-pencil-square-o" aria-hidden="true"></i>
+                                                                    </a>
+                                                                </div>
                                                             </div>
-                                                        </li>
-                                                        <li class="ngFormFeat--item"> 
+                                                        </li> @*first li*@
+                                                        <li class="ngFormFeat--item">
                                                             <div class="row">
                                                                 <div class="container-fluid">
                                                                     <div class="col-sm-12">
@@ -74,26 +79,26 @@
                                                                                     <div class="form-group">
                                                                                         <input type="text"
                                                                                                class="form-control"
-                                                                                               id="featureName"
-                                                                                               name="featureName"
+                                                                                               id="featureName-{{$index}}"
+                                                                                               name="featureName-{{$index}}"
                                                                                                placeholder="Feature Name..."
-                                                                                              
-                                                                                               ng-model="Featuress.Name">
+                                                                                               ng-model="FeaturessName"
+                                                                                               ng-change="loadFeatures(FeaturessName, tecn.Id)">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-sm-7">
                                                                                     <div class="form-group">
                                                                                         <input type="text"
                                                                                                class="form-control"
-                                                                                               id="featureDetail"
-                                                                                               name="featureDetail"
+                                                                                               id="featureDetail-{{$index}}"
+                                                                                               name="featureDetail-{{$index}}"
                                                                                                placeholder="Feature Description..."
-                                                                                               ng-model="Featuress.Detail">
+                                                                                               ng-model="FeaturessDetail">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-sm-2">
                                                                                     <div class="form-group">
-                                                                                        <button type="button" class="btn btn-sm btn-primary" ng-click="saveFeature(tecn.Id)">
+                                                                                        <button type="button" class="btn btn-sm btn-primary" ng-disabled="btnDis" ng-click="saveFeature(tecn.Id, FeaturessName, FeaturessDetail)">
                                                                                             <i class="fa fa-plus" aria-hidden="true"></i> Save
                                                                                         </button>
                                                                                     </div>
@@ -102,6 +107,15 @@
                                                                         </div>
                                                                     </div>
                                                                 </div>
+                                                            </div>
+                                                            @*alert here*@
+                                                            <div class="row" style="padding: 5px;">
+                                                                <div class="col-sm-4">
+                                                                    <div ng-if="msg" class="alert alert-danger" role="alert">
+                                                                        <strong><i class="fa fa-warning" aria-hidden="true"></i> Error!</strong> {{msg}}
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-xs-3"></div>
                                                             </div>
                                                         </li>
                                                     </ul>
@@ -124,7 +138,6 @@
                     </div>
                 </fieldset>
             </form>
-        </div>
-        @{ @Html.Partial("_modal"); }
+        </div>                
     </div>
 </section>

@@ -1,4 +1,4 @@
-﻿app.factory('logInCustom', [ '$http', 'skillsSetService', '$rootScope', '$timeout', function ( $http, skillsService, $rootScope, $timeout) {
+﻿app.factory('logInCustom', [ '$http',  '$rootScope', '$timeout', function ( $http, $rootScope, $timeout) {
     $rootScope.showHideContent = true;
     $rootScope.showHideAdminContent = true;
 

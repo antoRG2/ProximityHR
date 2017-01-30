@@ -2,7 +2,6 @@
 using Proximity.HR.Data;
 using Proximity.HR.Data.Repository;
 using Proximity.HR.Models.Dto;
-using Proximity.HR.Models.ReportsDto;
 using Proximity.HR.Service;
 using System.Linq;
 
@@ -30,7 +29,7 @@ namespace Proximity.HR.Services.Service
             var result = new FeaturesDto();
             var unitOfWork = new UnitOfWork();
             var data = unitOfWork.GetRepositoryInstance<Feature>().Get().ToList();
-            result.AddRange(from Feature feacture in data select Mapper.Map<Feature, FeatureDto>(feacture));
+            result.AddRange(from Feature feature in data select Mapper.Map<Feature, FeatureDto>(feature));
 
             return result;
         }

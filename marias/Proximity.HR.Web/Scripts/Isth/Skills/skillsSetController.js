@@ -2,24 +2,46 @@
     ['$scope', '$rootScope', '$modal', '$log', 'skillsSetService', '$timeout', '$window', 
 function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window) {
     $scope.SelectFeature = 0;
-    $scope.technologyName = "name";
-    $scope.technologyDescription = "decription";
     $scope.IsFormSubmitted = false;
-    $scope.IsForm2Submitted = false;
     $scope.IsFormValid = false;
     $scope.allowEdition = true;
+    $scope.btnDis = false;
     $scope.editedby = 'Admin';
     $scope.filteredTechnologies = [];
-    $scope.someFeat = [];
     $scope.currentPage = 1;
     $scope.numPerPage = 10;
     $scope.maxSize = 10;
     $scope.lockSectionClass = 'SectionLockOff';
-    $scope.FeaturesModel = { "Technology": 0, "Name": "", "Detail": "", "Enabled": null, "CreatedBy": "", "CreatedDate": null, "EditedBy": "", "EditedDate": null };
-    $scope.Featuress = $scope.FeaturesModel;
     $scope.$watch("EmployeeTechFeatureLstForm.$valid", function (isValid) {
         $scope.IsFormValid = isValid;
     });
+
+    //Edit Feature Modal
+    $scope.open = function (size, enabled, item) {
+        var modalInstance = $modal.open({
+            animation: $scope.animationsEnabled,
+            templateUrl: 'myModalContent.html',
+            controller: 'ModalInstanceCtrl',
+            size: size,
+            resolve: {
+                features: function () {
+                    return {} //$scope.Technology.Features;
+                },
+                Selected: function () {
+                    return item;
+                },
+                allowEdit: function () { return enabled; },
+                newFeature: {}
+            }
+        });
+
+        modalInstance.result.then(function (selectedItem) {
+
+        }, function () {
+            $log.info('Modal dismissed at: ' + new Date());
+        });
+
+    };
 
     //create pagination============================================================
     function createPaging() {
@@ -58,7 +80,7 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
             var promise = skillsSetService.GetTechnologies($rootScope.EmployeeID);
             promise.success(function (response) {
                 if (response.Status == 1) {
-                    console.log("Tecnologies loading success");
+                    console.log("Technologies loading success");
                     $scope.Technologies = response.Response;
                     //console.log($scope.Technologies);
                     createPaging();
@@ -73,13 +95,15 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
     };
 
     /*======================================== load features ========================================*/
-    $rootScope.loadFeatures = function () {
+    $rootScope.loadFeatures = function (name, techId) {
         var promise = skillsSetService.GetFeatures();
         promise.success(function (response) {
             if (response.Status === 1) {
-                console.log("features are loading!");
+                //console.log("features are loading!");
                 $rootScope.FeatList = response.Response;
-                //console.log($scope.FeatList);
+                //console.info($rootScope.FeatList);
+                $scope.featExist($rootScope.FeatList, name, techId);
+                
             } else {
                 console.error('features didnt load');
             }
@@ -87,32 +111,60 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
 
         promise.error(function (data, status, headers, config) { });
     };
-
-
-
     
 
+    $scope.featExist = function (ftList, name, techId) {
+        var userInput = name;
+        ftList.forEach(function (ft) {
+            var ftName = ft.Name;
+            //console.info(ftName.toLowerCase() + " featureName " + userInput.toLowerCase());
+            if (userInput.toLowerCase() === ftName.toLowerCase() && techId === ft.Technology && userInput !== "") {
+                $scope.msg = "The feature already exists";
+                $scope.btnDis = true;
+                exit;
+
+            }else {
+                $scope.msg = "";
+                $scope.btnDis = false;
+            }
+        })//foreach
+    }// featList
+    
+//else if (userInput.toLowerCase().match(/^ftName.toLowerCase().*$/)) {
+//        $scope.warning = "It exists " + tName.toLowerCase() + "already";
+    //    }
+
+
+
+
+
+
 /*======================================SAVE FEATURE()====================================================*/
-    $scope.saveFeature = function (id) {
-        $scope.Featuress.Technology = id;
-        if ($scope.Featuress.Name !== "") {
-            // foreach
-            console.log(`returning ft.Name ${$scope.featExist($rootScope.FeatList)}`);
-            //if $scope.Features.Name !== $scope.FeatList.Name
-            var data = [$scope.Featuress.Technology, $scope.Featuress.Name, $scope.Featuress.Detail];
-            var promise = skillsSetService.PostFeature($scope.Featuress);
+    $scope.saveFeature = function (id, name, detail) {
+        if (name !== "") {
+            var featData = {
+                Technology: id,
+                Name: name,
+                Detail: detail,
+                Enabled: null,
+                CreatedBy: "",
+                CreatedDate: null,
+                EditedBy: "",
+                EditedDate: null
+            };
+            var promise = skillsSetService.PostFeature(featData);
             promise.success(function (response) {
                 if (response.Status == 1) {
                     $timeout(function () {
-                        $scope.Featuress.Name = "";
-                        $scope.Featuress.Detail = "";
-                        swal("Great", "Data successfully processed!", "success");
+                        $scope.FeaturessName = "";
+                        $scope.FeaturessDetail = "";
+                        swal("Great", "The feature was added!", "success");
                         $rootScope.LoadEmployees();
                     }, 1);
                 } else {
                     $timeout(function () {
-                        swal("Oops...", "Something went wrong!", "error");
-                        console.log(data);
+                        swal("Oops...", "There was an error while trying to save feature", "error");
+                        console.log(featData);
                     }, 1);
                 }
                 $rootScope.LoadTechnologies();
@@ -131,7 +183,9 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
         }
     };
 
-    //save()=======================================================================
+
+
+    //save skillset()=======================================================================
     $scope.saveEmployeeTechFeatureLst = function () {
         $scope.IsFormSubmitted = true;
 
@@ -147,24 +201,24 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
                 if (response.Status == 1) {
                     $timeout(function () {
                         $scope.lockSectionClass = 'SectionLockOff';
-                        swal("Great", "Data successfully processed!", "success");
+                        swal("Great", "Skillset was saved!", "success");
                         $rootScope.LoadEmployees();
                     }, 1);
                 } else {
                     $timeout(function () {
                         $scope.lockSectionClass = 'SectionLockOff';
-                        swal("Oops...", "Something went wrong!", "error");
+                        swal("Oops...", "Something went wrong while saving your skillset!", "error");
                         console.log(data);
                     }, 1);
                 }
                 $scope.allowEdition = true;
-                LoadTechnologies();
+                $rootScope.LoadTechnologies();
             });
 
             promise.error(function (data, status, headers, config) {
                 $timeout(function () {
                     $scope.lockSectionClass = 'SectionLockOff';
-                    swal("Oops...", "Something went wrong!", "error");
+                    swal("Oops...", "Something went wrong processing the request!", "error");
                     console.log(data);
                 }, 1);
             });
@@ -211,9 +265,39 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
     };
 }]);
 
+app.controller('ModalInstanceCtrl', ['$scope', '$timeout', '$modalInstance', 'features', 'Selected', 'allowEdit', 'newFeature', 'skillsSetService',
+    function ($scope, $timeout, $modalInstance, features, Selected, allowEdit, newFeature, skillsSetService) {
 
+        if (allowEdit) {
+            console.log(Selected);
+            $scope.Features = Selected;
+            $scope.formTitle = "Edit Feature";
+            $scope.allowDelete = true;
+        } else {
+            $scope.Features = newFeature;
+            $scope.formTitle = "Add new Feature";
+            $scope.allowDelete = false;
+        }
 
+        $scope.max = 1;
+        $scope.isReadonly = false;
 
+        //Apply button click
+        $scope.ok = function (editedItem) {
+            if (!allowEdit) {
+                if (newFeature.Name !== "")
+                    features.push(newFeature);
+            } else {
+                skillsSetService.UpdateFeature(editedItem);
+            }
 
+            $modalInstance.close();
+        };
 
+        //Close modal form
+        $scope.cancel = function () {
+            $modalInstance.dismiss('cancel');
+        };
+    }
 
+]);
