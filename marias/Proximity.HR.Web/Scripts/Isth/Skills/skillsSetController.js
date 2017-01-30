@@ -2,22 +2,16 @@
     ['$scope', '$rootScope', '$modal', '$log', 'skillsSetService', '$timeout', '$window', 
 function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window) {
     $scope.SelectFeature = 0;
-    $scope.technologyName = "name";
-    $scope.technologyDescription = "decription";
     $scope.IsFormSubmitted = false;
-    $scope.IsForm2Submitted = false;
     $scope.IsFormValid = false;
     $scope.allowEdition = true;
     $scope.btnDis = false;
     $scope.editedby = 'Admin';
     $scope.filteredTechnologies = [];
-    $scope.someFeat = [];
     $scope.currentPage = 1;
     $scope.numPerPage = 10;
     $scope.maxSize = 10;
     $scope.lockSectionClass = 'SectionLockOff';
-    $scope.FeaturesModel = { "Technology": 0, "Name": "", "Detail": "", "Enabled": null, "CreatedBy": "", "CreatedDate": null, "EditedBy": "", "EditedDate": null };
-    $scope.Featuress = $scope.FeaturesModel;
     $scope.$watch("EmployeeTechFeatureLstForm.$valid", function (isValid) {
         $scope.IsFormValid = isValid;
     });
@@ -138,25 +132,39 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
     
 //else if (userInput.toLowerCase().match(/^ftName.toLowerCase().*$/)) {
 //        $scope.warning = "It exists " + tName.toLowerCase() + "already";
-//    }
+    //    }
+
+
+
+
+
+
 /*======================================SAVE FEATURE()====================================================*/
-    $scope.saveFeature = function (id) {
-        $scope.Featuress.Technology = id;
-        if ($scope.Featuress.Name !== "") {
-            var data = [$scope.Featuress.Technology, $scope.Featuress.Name, $scope.Featuress.Detail];
-            var promise = skillsSetService.PostFeature($scope.Featuress);
+    $scope.saveFeature = function (id, name, detail) {
+        if (name !== "") {
+            var featData = {
+                Technology: id,
+                Name: name,
+                Detail: detail,
+                Enabled: null,
+                CreatedBy: "",
+                CreatedDate: null,
+                EditedBy: "",
+                EditedDate: null
+            };
+            var promise = skillsSetService.PostFeature(featData);
             promise.success(function (response) {
                 if (response.Status == 1) {
                     $timeout(function () {
-                        $scope.Featuress.Name = "";
-                        $scope.Featuress.Detail = "";
+                        $scope.FeaturessName = "";
+                        $scope.FeaturessDetail = "";
                         swal("Great", "The feature was added!", "success");
                         $rootScope.LoadEmployees();
                     }, 1);
                 } else {
                     $timeout(function () {
                         swal("Oops...", "There was an error while trying to save feature", "error");
-                        console.log(data);
+                        console.log(featData);
                     }, 1);
                 }
                 $rootScope.LoadTechnologies();
@@ -175,7 +183,9 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
         }
     };
 
-    //save()=======================================================================
+
+
+    //save skillset()=======================================================================
     $scope.saveEmployeeTechFeatureLst = function () {
         $scope.IsFormSubmitted = true;
 

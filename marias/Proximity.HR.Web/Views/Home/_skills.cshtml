@@ -67,7 +67,7 @@
                                                                     </a>
                                                                 </div>
                                                             </div>
-                                                        </li>
+                                                        </li> @*first li*@
                                                         <li class="ngFormFeat--item">
                                                             <div class="row">
                                                                 <div class="container-fluid">
@@ -79,28 +79,26 @@
                                                                                     <div class="form-group">
                                                                                         <input type="text"
                                                                                                class="form-control"
-                                                                                               id="featureName"
-                                                                                               name="featureName"
+                                                                                               id="featureName-{{$index}}"
+                                                                                               name="featureName-{{$index}}"
                                                                                                placeholder="Feature Name..."
-                                                                                               ng-model="Featuress.Name"
+                                                                                               ng-model="FeaturessName"
                                                                                                ng-blur="loadFeatures()">
-                                                                                        @*<div ng-if="msg" class="alert alert-danger" role="alert"><strong>Error!</strong> {{msg}}</div>*@
-                                                                                        @*<div ng-if="warning" class="alert alert-warning" role="alert"><strong>Suggestion!</strong> {{warning}}</div>*@
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-sm-7">
                                                                                     <div class="form-group">
                                                                                         <input type="text"
                                                                                                class="form-control"
-                                                                                               id="featureDetail"
-                                                                                               name="featureDetail"
+                                                                                               id="featureDetail-{{$index}}"
+                                                                                               name="featureDetail-{{$index}}"
                                                                                                placeholder="Feature Description..."
-                                                                                               ng-model="Featuress.Detail">
+                                                                                               ng-model="FeaturessDetail">
                                                                                     </div>
                                                                                 </div>
                                                                                 <div class="col-sm-2">
                                                                                     <div class="form-group">
-                                                                                        <button type="button" class="btn btn-sm btn-primary" ng-disabled="btnDis" ng-click="saveFeature(tecn.Id)">
+                                                                                        <button type="button" class="btn btn-sm btn-primary" ng-disabled="btnDis" ng-click="saveFeature(tecn.Id, FeaturessName, FeaturessDetail)">
                                                                                             <i class="fa fa-plus" aria-hidden="true"></i> Save
                                                                                         </button>
                                                                                     </div>
