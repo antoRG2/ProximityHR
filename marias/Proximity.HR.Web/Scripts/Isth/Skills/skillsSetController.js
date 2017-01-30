@@ -118,7 +118,7 @@ function ($scope, $rootScope, $modal, $log, skillsSetService, $timeout, $window)
         ftList.forEach(function (ft) {
             var ftName = ft.Name;
             //console.info(ftName.toLowerCase() + " featureName " + userInput.toLowerCase());
-            if (userInput.toLowerCase() === ftName.toLowerCase() && techId === ft.Technology) {
+            if (userInput.toLowerCase() === ftName.toLowerCase() && techId === ft.Technology && userInput !== "") {
                 $scope.msg = "The feature already exists";
                 $scope.btnDis = true;
                 exit;

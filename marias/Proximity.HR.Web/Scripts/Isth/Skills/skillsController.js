@@ -34,7 +34,7 @@ function ($scope, $rootScope, $modal, $log, skillsService, $timeout, $window) {
         techList.forEach(function (tech) {
             var techName = tech.Name;
             //console.info(techName.toLowerCase() + " featureName " + userInput.toLowerCase());
-            if (userInput.toLowerCase() === techName.toLowerCase()) {
+            if (userInput.toLowerCase() === techName.toLowerCase() && userInput !== "") {
                 $scope.msg = "The technology already exists";
                 $scope.allowEditionBtn = true;
                 exit;

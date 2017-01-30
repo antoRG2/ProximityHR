@@ -59,7 +59,7 @@
                                         <div ng-if="msg" class="alert alert-danger" role="alert">
                                             <strong><i class="fa fa-warning" aria-hidden="true"></i> Error!</strong> {{msg}}
                                         </div>
-                                        <input type="text" class="form-control" name="txtTechnologyName" id="txtTechnologyName" data-ng-model="Technology.Name" ng-disabled="allowEdition" placeholder=" technology Name..." required ng-blur="LoadTechnologiesFeatures()" />
+                                        <input type="text" class="form-control" name="txtTechnologyName" id="txtTechnologyName" data-ng-model="Technology.Name" ng-disabled="allowEdition" placeholder=" technology Name..." required ng-change="LoadTechnologiesFeatures()" />
                                         <br />
 
 
