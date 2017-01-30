@@ -633,7 +633,7 @@ textarea.form-control {
 .pfblock-image h4,
 .pfblock-image h5,
 .pfblock-image h6 {
-	color: #fff;
+	color: #F2F4F3;
 }
 
 .pfblock-header {
@@ -729,12 +729,12 @@ textarea.form-control {
 	position: relative;
 	width: 100%;
 	min-height: 100vh;
-    background: linear-gradient( rgba(0,0,0,0.45), rgba(0,0,0,0.45)), url(../images/hero.jpg);
+    background: linear-gradient(to bottom, rgba(255,255,255,0.5), rgba(0,0,0,.9)), url(../images/hero.jpg);
     /*background: -webkit-linear-gradient( rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(images/hero.jpg);*/ 
     /*background: linear-gradient(to left, #111, #222);*/
 	background-attachment: fixed;
 	background-repeat: no-repeat;
-	background-position: 50% 50%;
+	background-position: top center;
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	-o-background-size: cover;
@@ -744,15 +744,16 @@ textarea.form-control {
 
 .logo img {
     width: 600px;
-    height: 200px;
+    height: 300px;
     margin-bottom: 20px;
+    /*box-shadow: 0 0 50px rgba(0,0,0,0.2) !important;*/
 }
 
 .navbar-brand--logo {
-    margin: 0;
+    margin: 0 0 20px 0;
     padding: 0;
-    width: 150px; 
-    height: 65px;
+    width: 120px; 
+    height: 50px;
 }
 .loginContainer {
 	/*background: -webkit-linear-gradient(-90deg, black, #210B61) !important;
@@ -788,11 +789,12 @@ textarea.form-control {
 
 .logInFormMessage {
 	position: relative;
-	color: #BCC1C3;
-	letter-spacing: 2px;
-	text-transform: uppercase;
+	color: #F2F4F3;
+	letter-spacing: 1px;
+	text-transform: capitalize;
 	margin: 4rem 0;
 	font-size: 3rem;
+    font-weight: 300;
 }
 
 .logInFormMessage:before {
@@ -1076,9 +1078,10 @@ textarea.form-control {
 }
 
 .navbar-custom .navbar-brand {
-	font-weight: 700;
-	font-size: 22px;
-	font-family: Lobster, cursive;
+	font-weight: 300;
+    font-size: 15px;
+    /* font-family: Lobster, cursive; */
+    letter-spacing: 2px;
 }
 
 .navbar-custom .dropdown-menu {
