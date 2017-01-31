@@ -8,7 +8,7 @@
 
 
 angular.module('angucomplete', [])
-    .directive('angucomplete', ['$parse', '$http', '$sce', '$timeout', function ($parse, $http, $sce, $timeout) {
+    .directive('angucomplete', ['$parse', '$http', '$sce', '$timeout', 'syncSelectedEmployee', function ($parse, $http, $sce, $timeout, syncSelectedEmployee) {
     return {
         restrict: 'EA',
         scope: {
@@ -214,6 +214,8 @@ angular.module('angucomplete', [])
             };
 
             $scope.selectResult = function (result) {
+                syncSelectedEmployee.setSelectedEmployee(result);
+
                 if ($scope.matchClass) {
                     result.title = result.title.toString().replace(/(<([^>]+)>)/ig, '');
                 }
@@ -221,7 +223,8 @@ angular.module('angucomplete', [])
                 $scope.selectedObject = result;
                 $scope.showDropdown = false;
                 $scope.results = [];
-                $scope.callbackFn();
+                $scope.callbackFn($scope);
+               
             };
 
             var inputField = elem.find('input');
@@ -268,6 +271,8 @@ angular.module('angucomplete', [])
                     $scope.$apply();
                 }
             });
+
+            syncSelectedEmployee.setLocalScope($scope);
 
         }
     };

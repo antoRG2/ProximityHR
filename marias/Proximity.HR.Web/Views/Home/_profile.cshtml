@@ -35,7 +35,7 @@
                                   placeholder="Search by Employee Id"
                                   pause="100"
                                   selectedobject="selectedCountry"
-                                  callback-fn="loadEmployeesTimer()"
+                                  callback-fn="loadEmployeesNumber()"
                                   localdata="Employees"
                                   searchfields="EmployeeNumber"
                                   titlefield="EmployeeNumber"
@@ -44,7 +44,6 @@
                                   matchclass="highlight" />
                 </div>
             </div>
-            @*<div class="col-sm-6"></div>*@
         </div>
         <div class="row">
             <form novalidate name="f1" ng-submit="saveDetails()" accordeon-show>

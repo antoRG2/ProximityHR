@@ -8,9 +8,9 @@ var app;
 
 app.controller("employeeController",
                 ['$scope', '$cookies', '$timeout', '$rootScope', '$window',
-                 '$http', 'employeeService', 'GeneralDataService', '$interval',
+                 '$http', 'employeeService', 'GeneralDataService', '$interval','syncSelectedEmployee',
        function ($scope, $cookies, $timeout, $rootScope, $window,
-                 $http, employeeService, GeneralDataService, $interval) {
+                 $http, employeeService, GeneralDataService, $interval, syncSelectedEmployee) {
 
            $scope.date = new Date();
            $scope.MyName = "IsthMe";
@@ -49,10 +49,19 @@ app.controller("employeeController",
                loadEmployeeById($scope.selectedCountry.originalObject.Id);
            };
 
-           $scope.loadEmployeesTimer = function () {
+           $scope.loadEmployeesTimer = function (inputScope) {
                $timeout(loadEmployeescall, 1);
+               var field = syncSelectedEmployee.employeeNumberFilterScope.titleField;
+               syncSelectedEmployee.employeeNumberFilterScope.searchStr = syncSelectedEmployee.getSelectedEmployee().originalObject[field];
+
            };
-          
+
+           $scope.loadEmployeesNumber= function (inputScope) {
+               $timeout(loadEmployeescall, 1);
+               var field = syncSelectedEmployee.nameFilterScope.titleField;
+               syncSelectedEmployee.nameFilterScope.searchStr = syncSelectedEmployee.getSelectedEmployee().originalObject[field];            
+           };
+           
            //Search
            $scope.searchEmployeeDetails = function () {
                selectEmployeeDetails($scope.employeeId);
@@ -65,7 +74,6 @@ app.controller("employeeController",
            //===========================================Save employee
            $scope.saveDetails = function () {
                var obj = scopeToEmployeeObj();
-               console.log(`obj is ${obj}`);
 
                $scope.IsFormSubmitted = true;
                //$scope.IsFormValid = true;
@@ -73,7 +81,6 @@ app.controller("employeeController",
                if ($scope.IsFormValid) {
                    $scope.lockSectionClass = 'SectionLockOn';
 
-                   console.log($scope.employeeId);
                    if ($scope.employeeId === 0) {
                        $http.post('/api/employee/PostEmployee/', obj).success(function (data) {
                            if (data.Status === 1) {
@@ -265,7 +272,6 @@ app.controller("employeeController",
            };
 
            function selectEmployeeDetails(employeeNumber) {
-               debugger;
                $http.get('/api/employee/GetEmployeeById/', { params: { employeeId: employeeNumber } })
                    .success(function (data) {
                        employeeObjToScope(data);
@@ -476,13 +482,34 @@ app.directive('accordeonShow', function () {
             elem.on('submit', function () {
                 var firstInvalid = elem[0].querySelector('span.error:not(.ng-hide)');
                 if (firstInvalid) {
-                    console.log(firstInvalid);
                     $(firstInvalid).closest('.panel-collapse').collapse('show');
                     firstInvalid.focus();
                 }
             });
         }
     };
+});
+
+app.service("syncSelectedEmployee", function() {
+    var selectedEmployee = {};
+    this.nameFilterScope = {};
+    this.employeeNumberFilterScope = {};
+
+    this.getSelectedEmployee = function() {
+        return selectedEmployee;
+    };
+    this.setSelectedEmployee = function(selected) {
+        selectedEmployee = selected;
+    };
+    this.setLocalScope = function (scope) {
+        if (scope && scope.titleField === 'FullName') {
+            this.nameFilterScope = scope;
+        }
+        else {
+            this.employeeNumberFilterScope = scope;
+        }
+    }
+
 });
 
 app.run(function ($rootScope) {
